@@ -475,493 +475,418 @@ FROM
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">sql =</span> sql,</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">patient_id =</span> cdmPersonData<span class="sc">$</span>person_source_value</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>offendingRows</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                     Id      START       STOP
-1  4a4c72f5-c96e-d2a3-a13e-3a594d80b9e9 1988-12-10 1988-12-10
-2  9bb588fc-5ba6-9c71-f69d-2049a1ea52f0 1992-12-19 1992-12-19
-3  164cc8f0-7429-5b16-2b33-dd42b969423f 1993-12-25 1993-12-25
-4  436bf43f-13e9-beac-bf21-548caa1df6f0 2000-01-01 2000-01-01
-5  266cbbec-17e4-04bf-a21a-6846c8d62d83 2003-01-04 2003-01-04
-6  322b22af-8ef5-6605-7c19-32615f0ab4fd 2005-08-27 2005-08-27
-7  008d733b-8a84-3b91-dfff-cab465f1652e 2005-10-22 2005-10-22
-8  6c2b614b-8dac-7397-659c-488145d40efa 2005-11-19 2005-11-19
-9  3ca65228-0fa7-401f-3ac1-83f57b01644d 2005-12-17 2005-12-17
-10 fb4b5423-02bc-3595-d56b-c3d89d2cd97a 2006-01-07 2006-01-07
-11 6f21b3f9-f153-eb6c-4292-c887d798428c 2006-01-14 2006-01-14
-12 5d6f2553-05e9-1c64-9343-694ed40d9163 2006-01-21 2006-01-21
-13 628d3cd3-35e9-5838-a8b7-72aa2fd28a3e 2006-02-11 2006-02-11
-14 2a831cda-ad85-9e67-076d-8e79710b33a7 2006-03-11 2006-03-11
-15 db0259f1-466c-3631-bd59-f57532a57e78 2006-03-25 2006-03-25
-16 5e05bce1-9e4f-064d-34c0-8b3bf569374c 2006-05-06 2006-05-06
-17 edc1a72f-564d-c434-65f0-c71f27f875d1 2006-05-13 2006-05-13
-18 3b78a4c7-63d3-b7f2-c77b-39b460530b71 2008-06-21 2008-06-21
-19 94a9d063-c996-9c30-97bb-1f8863bc7ceb 2008-07-19 2008-07-19
-20 c1b15642-82b3-ca7a-f8a1-8a688e4321fb 2008-08-16 2008-08-16
-21 11abc16c-05b8-ff3f-1454-2d892f68b6f8 2008-09-13 2008-09-13
-22 ff69fc5e-efd7-6aa8-7d18-186125cff529 2008-10-11 2008-10-11
-23 120ce5f9-8d80-19bb-4a68-b16c1ad47fab 2008-11-08 2008-11-08
-24 48959405-9aa6-ff76-1628-793bab0c0587 2008-12-06 2008-12-06
-25 a601e2e8-7d9d-1b6b-6385-0af41c66a5ef 2009-01-03 2009-01-03
-26 4b632ecb-7ebb-bf4a-d2a8-dec29761d0c8 2009-01-10 2009-01-10
-27 c1157939-fe40-56c2-b959-b45509a6397d 2009-01-17 2009-01-17
-28 ade2bcca-22fc-6ce3-7cac-05039d91c4e9 2009-01-24 2009-01-24
-29 5b98fb65-6109-2523-e059-93ba36a36812 2009-01-31 2009-01-31
-30 ad3b8c3a-1f35-c785-f60d-6563535a282e 2009-02-07 2009-02-07
-31 0767212d-7870-2787-0b8d-36195866270c 2009-03-21 2009-03-21
-32 8b75c016-e333-5fd5-211a-d30d7f224127 2009-06-17 2009-06-17
-33 15bc213b-18cd-b4c8-8f8a-3c5c141c8cb6 2010-03-23 2010-03-23
-34 7357411b-7535-a6bd-b879-bcf2f943b325 2010-04-02 2010-04-03
-35 c5432e7a-bbe9-5fc5-e033-d8fddd17fb47 2011-07-22 2011-07-22
-36 345f2d76-5c69-f240-658c-3e87cdd1a485 2011-10-14 2011-10-14
-37 d065034a-8ba5-0f56-cebe-cf3032aad78a 2011-10-22 2011-10-22
-38 bb2c5db0-5acb-c8b7-31c9-62e2dea75aba 2012-01-14 2012-01-14
-39 5093753a-ba49-d7e2-0282-ac1cb2bf239b 2012-01-28 2012-01-28
-40 1514210b-8fee-297a-2fab-31be1a5ff9c6 2012-02-25 2012-02-26
-41 48540a5a-c7e2-48eb-09b0-81af34789e35 2012-04-30 2012-04-30
-42 ff08570e-8d1b-833b-01bf-19eed73ebf0a 2014-11-01 2014-11-01
-43 62094440-bf02-e49a-bdb1-e964f550252b 2014-11-15 2014-11-15
-44 951653ac-2f7d-d881-a69a-86608e76b7d9 2016-09-10 2016-09-10
-45 0150e57c-c594-b54b-c2ed-96678a66aa7d 2016-09-17 2016-09-17
-46 3284d8a6-59d2-b804-8f5c-97b0a6d5593d 2016-11-05 2016-11-05
-47 f2ac4a16-a919-f1c0-b5c7-846913fa0f7c 2016-11-19 2016-11-19
-48 f93555a5-9117-14b8-7af1-718818c56d47 2018-11-10 2018-11-10
-49 a8b72c32-9512-7285-61fd-9f7b4158c3f5 2018-11-24 2018-11-24
-50 aa0aa91b-6ce6-d58d-86dd-d33d0da97e65 2019-04-24 2019-04-24
-51 91430d97-a8b7-32d6-82db-1129b3df2f02 2019-05-25 2019-05-26
-52 c9d59bf1-1e05-6bd5-ee86-3c0fef59f271 2020-10-30 2020-10-30
-53 2f704f48-fcb2-ae8c-f647-ed88954927f6 2020-11-14 2020-11-14
-54 b3ccb525-6b42-50b7-7f36-82043b83021b 2020-11-28 2020-11-28
-55 66e2b441-84f3-8872-4ace-7637cddcf794 2021-05-22 2021-05-22
-56 5ff08730-0040-8b57-4921-2674ec7497a0 2021-06-19 2021-06-19
-57 ca6161ee-b5ab-6a50-9455-3a010a656118 2021-11-20 2021-11-20
-58 81688d1d-cd50-3634-c0a5-0fba49a24bd7 2021-11-27 2021-11-27
-59 bac6de50-b9e1-f35f-ff9e-7d2bde5d14e8 2021-12-04 2021-12-04
-60 26a077f3-945b-d509-9de4-40abfb9208a9 2022-07-09 2022-07-09
-61 31c38eb4-ffff-9bd0-43a7-ab8a9fbe70fb 2022-11-26 2022-11-26
-62 11edeb00-3563-71e7-0353-feb16a252148 2022-12-10 2022-12-10
-63 2f54a286-7b63-3cb7-31b4-f1f9b328ec94 2023-12-02 2023-12-02
-64 7d97186e-7424-da1a-e767-49a83732509c 2023-12-16 2023-12-16
-65 36f9f80c-e914-3e3d-493e-f5cedca65a61 2024-10-26 2024-10-26
-66 566f4d3f-c481-a067-86ee-d59e0fdb2e10 2024-12-07 2024-12-07
-67 3da1be5b-f216-5a03-2b4b-8c7d0b0d22e3 2025-04-25 2025-04-25
-                                PATIENT                         ORGANIZATION
-1  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-2  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-3  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-4  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-5  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-6  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-7  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-8  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-9  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-10 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-11 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-12 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-13 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-14 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-15 01e81e92-fd67-a663-8a01-fec9785e5074 215604a8-f8be-3023-add7-9ab05336faf8
-16 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-17 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
-18 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-19 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-20 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-21 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-22 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-23 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-24 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-25 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-26 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-27 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-28 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-29 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-30 01e81e92-fd67-a663-8a01-fec9785e5074 215604a8-f8be-3023-add7-9ab05336faf8
-31 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-32 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-33 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
-34 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-35 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-36 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-37 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
-38 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-39 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-40 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-41 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-42 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-43 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-44 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
-45 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-46 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-47 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-48 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-49 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-50 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-51 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-52 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-53 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-54 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-55 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
-56 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
-57 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-58 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
-59 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-60 01e81e92-fd67-a663-8a01-fec9785e5074 215604a8-f8be-3023-add7-9ab05336faf8
-61 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-62 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-63 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-64 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-65 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-66 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
-67 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
-                               PROVIDER                                PAYER
-1  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-2  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
-3  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
-4  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
-5  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
-6  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-7  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-8  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-9  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-10 0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
-11 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-12 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-13 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-14 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-15 2b3a122a-c23b-3c97-a6cc-50a18692018c e03e23c9-4df1-3eb6-a62d-f70f02301496
-16 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
-17 46bd53a3-a8f9-3003-9ea1-430aee6e5324 e03e23c9-4df1-3eb6-a62d-f70f02301496
-18 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-19 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-20 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-21 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-22 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-23 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-24 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-25 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-26 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-27 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-28 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-29 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-30 2b3a122a-c23b-3c97-a6cc-50a18692018c 0133f751-9229-3cfd-815f-b6d4979bdd6a
-31 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-32 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-33 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
-34 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-35 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-36 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-37 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
-38 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-39 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-40 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-41 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-42 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-43 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-44 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
-45 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-46 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-47 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-48 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-49 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-50 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-51 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-52 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-53 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-54 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-55 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
-56 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
-57 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-58 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
-59 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-60 2b3a122a-c23b-3c97-a6cc-50a18692018c 0133f751-9229-3cfd-815f-b6d4979bdd6a
-61 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-62 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-63 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-64 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-65 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-66 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
-67 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
-   ENCOUNTERCLASS      CODE
-1      ambulatory 185349003
-2        wellness 162673000
-3        wellness 162673000
-4        wellness 162673000
-5        wellness 162673000
-6      ambulatory 424441002
-7      ambulatory 424619006
-8      ambulatory 424619006
-9      ambulatory 424619006
-10       wellness 162673000
-11     ambulatory 424619006
-12     ambulatory 185349003
-13     ambulatory 424619006
-14     ambulatory 424619006
-15      emergency 183460006
-16     ambulatory 169762003
-17     outpatient 698314001
-18     ambulatory 424441002
-19     ambulatory 424619006
-20     ambulatory 424619006
-21     ambulatory 424619006
-22     ambulatory 424619006
-23     ambulatory 424619006
-24     ambulatory 424619006
-25     ambulatory 424619006
-26       wellness 162673000
-27     ambulatory 185347001
-28     ambulatory 424619006
-29     ambulatory 185349003
-30      emergency 183460006
-31     ambulatory 169762003
-32     ambulatory 185345009
-33     outpatient 698314001
-34      inpatient 305408004
-35     ambulatory 185345009
-36     ambulatory 185345009
-37     outpatient 185349003
-38       wellness 162673000
-39     ambulatory 185349003
-40      inpatient  32485007
-41     ambulatory 185345009
-42       wellness 162673000
-43     ambulatory 185349003
-44     outpatient 185349003
-45     ambulatory 185345009
-46       wellness 162673000
-47     ambulatory 185349003
-48       wellness 162673000
-49     ambulatory 185349003
-50     ambulatory 185345009
-51      inpatient  32485007
-52     ambulatory 185345009
-53       wellness 162673000
-54     ambulatory 185349003
-55     outpatient  33879002
-56     outpatient  33879002
-57       wellness 162673000
-58     outpatient 185349003
-59     ambulatory 185345009
-60      emergency  50849002
-61       wellness 162673000
-62     ambulatory 185349003
-63       wellness 162673000
-64     ambulatory 185349003
-65     ambulatory 185349003
-66       wellness 162673000
-67     ambulatory 185345009
-                                                        DESCRIPTION
-1                                Encounter for check up (procedure)
-2                        General examination of patient (procedure)
-3                        General examination of patient (procedure)
-4                        General examination of patient (procedure)
-5                        General examination of patient (procedure)
-6                                            Prenatal initial visit
-7                                                    Prenatal visit
-8                                                    Prenatal visit
-9                                                    Prenatal visit
-10                       General examination of patient (procedure)
-11                                                   Prenatal visit
-12                               Encounter for check up (procedure)
-13                                                   Prenatal visit
-14                                                   Prenatal visit
-15                           Obstetric emergency hospital admission
-16                                                  Postnatal visit
-17                                       Consultation for treatment
-18                                           Prenatal initial visit
-19                                                   Prenatal visit
-20                                                   Prenatal visit
-21                                                   Prenatal visit
-22                                                   Prenatal visit
-23                                                   Prenatal visit
-24                                                   Prenatal visit
-25                                                   Prenatal visit
-26                       General examination of patient (procedure)
-27                                            Encounter for problem
-28                                                   Prenatal visit
-29                               Encounter for check up (procedure)
-30                           Obstetric emergency hospital admission
-31                                                  Postnatal visit
-32                                            Encounter for symptom
-33                                       Consultation for treatment
-34                                 Admission to surgical department
-35                                            Encounter for symptom
-36                                            Encounter for symptom
-37                               Encounter for check up (procedure)
-38                       General examination of patient (procedure)
-39                               Encounter for check up (procedure)
-40                                   Hospital admission (procedure)
-41                                            Encounter for symptom
-42                       General examination of patient (procedure)
-43                               Encounter for check up (procedure)
-44                               Encounter for check up (procedure)
-45                                            Encounter for symptom
-46                       General examination of patient (procedure)
-47                               Encounter for check up (procedure)
-48                       General examination of patient (procedure)
-49                               Encounter for check up (procedure)
-50                                            Encounter for symptom
-51                                   Hospital admission (procedure)
-52                                            Encounter for symptom
-53                       General examination of patient (procedure)
-54                               Encounter for check up (procedure)
-55 Administration of vaccine to produce active immunity (procedure)
-56 Administration of vaccine to produce active immunity (procedure)
-57                       General examination of patient (procedure)
-58                               Encounter for check up (procedure)
-59                                            Encounter for symptom
-60                             Emergency room admission (procedure)
-61                       General examination of patient (procedure)
-62                               Encounter for check up (procedure)
-63                       General examination of patient (procedure)
-64                               Encounter for check up (procedure)
-65                                           Encounter for check up
-66                       General examination of patient (procedure)
-67                                            Encounter for symptom
-   BASE_ENCOUNTER_COST TOTAL_CLAIM_COST PAYER_COVERAGE REASONCODE
-1                84.76           236.59           0.00  103697008
-2               179.08           921.18           0.00       &lt;NA&gt;
-3               179.08           921.18           0.00       &lt;NA&gt;
-4               179.08           921.18           0.00       &lt;NA&gt;
-5               179.08          1052.20           0.00       &lt;NA&gt;
-6               141.27         60568.68           0.00   72892002
-7               141.27         17847.49           0.00   72892002
-8               141.27          6496.43           0.00   72892002
-9               141.27         16484.56           0.00   72892002
-10              179.08          1188.20           0.00       &lt;NA&gt;
-11              141.27         17180.44           0.00   72892002
-12               84.76           272.12           0.00   66383009
-13              141.27         19545.29           0.00   72892002
-14              141.27          7708.63           0.00   72892002
-15              143.38          5598.28           0.00   72892002
-16              141.27          1353.47           0.00       &lt;NA&gt;
-17              141.27           141.27           0.00  389095005
-18              141.27         86786.05       48415.21   72892002
-19              141.27         20539.02       20539.02   72892002
-20              141.27         11660.32       11660.32   72892002
-21              141.27         16029.19       16029.19   72892002
-22              141.27         16029.19       16029.19   72892002
-23              141.27         14074.60        4788.36   72892002
-24              141.27          7211.71        7211.71   72892002
-25              141.27         11707.42       11707.42   72892002
-26              179.08          1381.60        1381.60       &lt;NA&gt;
-27               84.76          1644.85        1644.85  271737000
-28              141.27          9217.86        9217.86   72892002
-29               84.76           171.73         171.73   66383009
-30              143.38           749.48         749.48   72892002
-31              141.27          1353.47        1353.47       &lt;NA&gt;
-32               84.76            84.76          84.76  195662009
-33              141.27           747.37           0.00  183996000
-34              143.38         17752.15        7443.31  183996000
-35               84.76            84.76           0.00  195662009
-36               84.76            84.76           0.00  444814009
-37               84.76          1268.13           0.00       &lt;NA&gt;
-38              179.08          1190.42           0.00       &lt;NA&gt;
-39               84.76            90.30           0.00  103697008
-40              143.38           999.45           0.00       &lt;NA&gt;
-41               84.76            84.76           0.00  444814009
-42              179.08          1326.42           0.00       &lt;NA&gt;
-43               84.76           263.85           0.00  103697008
-44               84.76          1360.90           0.00       &lt;NA&gt;
-45               84.76            84.76           0.00  444814009
-46              179.08          1917.15           0.00       &lt;NA&gt;
-47               84.76           439.48           0.00   66383009
-48              179.08          1059.40           0.00       &lt;NA&gt;
-49               84.76          1775.56           0.00   66383009
-50               84.76          5064.58        1251.18  307426000
-51              143.38           782.83         469.70       &lt;NA&gt;
-52               84.76            84.76           0.00  444814009
-53              179.08          1321.44           0.00       &lt;NA&gt;
-54               84.76           910.20           0.00   66383009
-55              141.27           277.27           0.00       &lt;NA&gt;
-56              141.27           277.27           0.00       &lt;NA&gt;
-57              179.08          1676.58           0.00       &lt;NA&gt;
-58               84.76           531.01           0.00       &lt;NA&gt;
-59               84.76          3780.16          19.37   10509002
-60              143.38           143.38          86.03  384709000
-61              179.08          1059.40           0.00       &lt;NA&gt;
-62               84.76            89.69           0.00  103697008
-63              179.08          1486.27           0.00       &lt;NA&gt;
-64               84.76           351.21           0.00   66383009
-65               84.76          7183.88         653.93  275978004
-66              179.08          1498.45         899.07       &lt;NA&gt;
-67               84.76            84.76          50.86   43878008
-                                       REASONDESCRIPTION
-1           Patient referral for dental care (procedure)
-2                                                   &lt;NA&gt;
-3                                                   &lt;NA&gt;
-4                                                   &lt;NA&gt;
-5                                                   &lt;NA&gt;
-6                                       Normal pregnancy
-7                                       Normal pregnancy
-8                                       Normal pregnancy
-9                                       Normal pregnancy
-10                                                  &lt;NA&gt;
-11                                      Normal pregnancy
-12                                 Gingivitis (disorder)
-13                                      Normal pregnancy
-14                                      Normal pregnancy
-15                                      Normal pregnancy
-16                                                  &lt;NA&gt;
-17                   Contraception care (regime/therapy)
-18                                      Normal pregnancy
-19                                      Normal pregnancy
-20                                      Normal pregnancy
-21                                      Normal pregnancy
-22                                      Normal pregnancy
-23                                      Normal pregnancy
-24                                      Normal pregnancy
-25                                      Normal pregnancy
-26                                                  &lt;NA&gt;
-27                                     Anemia (disorder)
-28                                      Normal pregnancy
-29                                 Gingivitis (disorder)
-30                                      Normal pregnancy
-31                                                  &lt;NA&gt;
-32                    Acute viral pharyngitis (disorder)
-33                   Sterilization requested (situation)
-34                   Sterilization requested (situation)
-35                    Acute viral pharyngitis (disorder)
-36                            Viral sinusitis (disorder)
-37                                                  &lt;NA&gt;
-38                                                  &lt;NA&gt;
-39          Patient referral for dental care (procedure)
-40                                                  &lt;NA&gt;
-41                            Viral sinusitis (disorder)
-42                                                  &lt;NA&gt;
-43          Patient referral for dental care (procedure)
-44                                                  &lt;NA&gt;
-45                            Viral sinusitis (disorder)
-46                                                  &lt;NA&gt;
-47                                 Gingivitis (disorder)
-48                                                  &lt;NA&gt;
-49                                 Gingivitis (disorder)
-50                   Acute infective cystitis (disorder)
-51                                                  &lt;NA&gt;
-52                            Viral sinusitis (disorder)
-53                                                  &lt;NA&gt;
-54                                 Gingivitis (disorder)
-55                                                  &lt;NA&gt;
-56                                                  &lt;NA&gt;
-57                                                  &lt;NA&gt;
-58                                                  &lt;NA&gt;
-59                           Acute bronchitis (disorder)
-60                      Sprain (morphologic abnormality)
-61                                                  &lt;NA&gt;
-62          Patient referral for dental care (procedure)
-63                                                  &lt;NA&gt;
-64                                 Gingivitis (disorder)
-65 Screening for malignant neoplasm of colon (procedure)
-66                                                  &lt;NA&gt;
-67                  Streptococcal sore throat (disorder)</code></pre>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<p>Inspecting these records, it doesn’t appear to be an issue with the source data but likely an issue with the ETL that needs investigation.</p>
+<p>You can inspect the <code>offendingRows</code> manually (it is too verbose to display in this document). Upon review you’ll find that it doesn’t appear to be an issue with the source data but likely an issue with the ETL that needs investigation.</p>
 </section>
 <section id="isrequired-on-visit_occurrence.visit_end_date" class="level5">
 <h5 class="anchored" data-anchor-id="isrequired-on-visit_occurrence.visit_end_date"><code>isRequired</code> on <code>VISIT_OCCURRENCE.VISIT_END_DATE</code></h5>
+<p>Let’s do a similar investigation on this fatal error for the <code>visit_occurrence</code> table:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>  dqChecks <span class="ot">&lt;-</span> DataQualityDashboard<span class="sc">::</span><span class="fu">listDqChecks</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  isRequiredCheck <span class="ot">&lt;-</span> dqChecks<span class="sc">$</span>checkDescriptions <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    .data<span class="sc">$</span>checkName <span class="sc">==</span> <span class="st">"isRequired"</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  isRequiredCheck</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 9
+  checkLevel checkName checkDescription kahnContext kahnCategory kahnSubcategory
+  &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;          
+1 FIELD      isRequir… The number and … Validation  Conformance  Relational     
+# ℹ 3 more variables: sqlFile &lt;chr&gt;, evaluationFilter &lt;chr&gt;, severity &lt;chr&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the SQL for this check from the DQD package</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  isRequiredCheckSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">readSql</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">sourceFile =</span> <span class="fu">system.file</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">file.path</span>(<span class="st">"sql"</span>, <span class="st">"sql_server"</span>, isRequiredCheck<span class="sc">$</span>sqlFile),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">package =</span> <span class="st">"DataQualityDashboard"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">mustWork =</span> <span class="cn">TRUE</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(isRequiredCheckSql)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+/*********
+FIELD_IS_REQUIRED
+
+Check that values in fields where isRequired == TRUE are non-null
+
+Parameters used in this template:
+schema = @schema
+cdmTableName = @cdmTableName
+cdmFieldName = @cdmFieldName
+{@cohort &amp; '@runForCohort' == 'Yes'}?{
+cohortDefinitionId = @cohortDefinitionId
+cohortDatabaseSchema = @cohortDatabaseSchema
+cohortTableName = @cohortTableName
+}
+**********/
+
+
+SELECT 
+    num_violated_rows, 
+    CASE 
+        WHEN denominator.num_rows = 0 THEN 0 
+        ELSE 1.0*num_violated_rows/denominator.num_rows
+    END AS pct_violated_rows, 
+    denominator.num_rows AS num_denominator_rows
+FROM (
+    SELECT 
+        COUNT_BIG(violated_rows.violating_field) AS num_violated_rows
+    FROM (
+        /*violatedRowsBegin*/
+        SELECT 
+            '@cdmTableName.@cdmFieldName' AS violating_field, 
+            cdmTable.* 
+        FROM @schema.@cdmTableName cdmTable
+            {@cohort &amp; '@runForCohort' == 'Yes'}?{
+                JOIN @cohortDatabaseSchema.@cohortTableName c
+                    ON cdmTable.person_id = c.subject_id
+                    AND c.cohort_definition_id = @cohortDefinitionId
+            }
+        WHERE cdmTable.@cdmFieldName IS NULL
+        /*violatedRowsEnd*/
+    ) violated_rows
+) violated_row_count,
+( 
+    SELECT 
+        COUNT_BIG(*) AS num_rows
+    FROM @schema.@cdmTableName cdmTable
+        {@cohort &amp; '@runForCohort' == 'Yes'}?{
+            JOIN @cohortDatabaseSchema.@cohortTableName c 
+                ON cdmTable.person_id = c.subject_id
+                AND c.cohort_definition_id = @cohortDefinitionId
+        }
+) denominator
+;</code></pre>
+</div>
+</div>
+<p>Again we’ll use this SQL with some modifications to find the offending rows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">        /*violatedRowsBegin*/</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT cdmTable.* </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM @schema.@cdmTableName cdmTable</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">            {@cohort &amp; '@runForCohort' == 'Yes'}?{</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">                JOIN @cohortDatabaseSchema.@cohortTableName c</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="st">                    ON cdmTable.person_id = c.subject_id</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="st">                    AND c.cohort_definition_id = @cohortDefinitionId</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="st">            }</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="st">        WHERE cdmTable.@cdmFieldName IS NULL</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="st">        /*violatedRowsEnd*/</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>connection <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(<span class="at">connectionDetails =</span> connectionDetails)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>offendingRows <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">renderTranslateQuerySql</span>(</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">connection =</span> connection,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">sql =</span> sql,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">schema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmTableName =</span> <span class="st">'visit_occurrence'</span>,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmFieldName =</span> <span class="st">'VISIT_END_DATE'</span>,</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">runForCohort =</span> <span class="st">'No'</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>offendingRows</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  visit_occurrence_id person_id visit_concept_id visit_start_date
+1                   1         1             9203       2006-03-25
+  visit_start_datetime visit_end_date visit_end_datetime visit_type_concept_id
+1           2006-03-25           &lt;NA&gt;         2006-03-25                 32827
+  provider_id care_site_id                   visit_source_value
+1         122           NA db0259f1-466c-3631-bd59-f57532a57e78
+  visit_source_concept_id admitted_from_concept_id admitted_from_source_value
+1                       0                        0                       &lt;NA&gt;
+  discharged_to_concept_id discharged_to_source_value
+1                        0                       &lt;NA&gt;
+  preceding_visit_occurrence_id
+1                            29</code></pre>
+</div>
+</div>
 </section>
+</section>
+<section id="convention-checks" class="level4">
+<h4 class="anchored" data-anchor-id="convention-checks">Convention Checks</h4>
+<p>Next we’ll run the convention checks as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  checkNames <span class="ot">&lt;-</span> <span class="fu">getDqdChecksBySeverityLevel</span>(<span class="st">"convention"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  DataQualityDashboard<span class="sc">::</span><span class="fu">executeDqChecks</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectionDetails =</span> connectionDetails,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">resultsDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmSourceName =</span> <span class="st">"DqTutorial"</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFolder =</span> <span class="st">"dqd_output"</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFile =</span> <span class="st">"convention.json"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">verboseMode =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">writeToTable =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkLevels =</span> <span class="fu">c</span>(<span class="st">"TABLE"</span>, <span class="st">"FIELD"</span>, <span class="st">"CONCEPT"</span>),</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkNames =</span> checkNames,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To then inspect the results via the dashboard run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>DataQualityDashboard<span class="sc">::</span><span class="fu">viewDqDashboard</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">jsonPath =</span> <span class="fu">normalizePath</span>(<span class="st">"dqd_output/convention.json"</span>, <span class="at">winslash =</span> <span class="st">"/"</span>, <span class="at">mustWork =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let’s do a similar investigation on this fatal error for the <code>visit_occurrence</code> table:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>  dqChecks <span class="ot">&lt;-</span> DataQualityDashboard<span class="sc">::</span><span class="fu">listDqChecks</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  isRequiredCheck <span class="ot">&lt;-</span> dqChecks<span class="sc">$</span>checkDescriptions <span class="sc">|&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    .data<span class="sc">$</span>checkName <span class="sc">==</span> <span class="st">"isRequired"</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the SQL for this check from the DQD package</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  isRequiredCheckSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">readSql</span>(</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sourceFile =</span> <span class="fu">system.file</span>(</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">file.path</span>(<span class="st">"sql"</span>, <span class="st">"sql_server"</span>, isRequiredCheck<span class="sc">$</span>sqlFile),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">package =</span> <span class="st">"DataQualityDashboard"</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">mustWork =</span> <span class="cn">TRUE</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(isRequiredCheckSql)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+/*********
+FIELD_IS_REQUIRED
+
+Check that values in fields where isRequired == TRUE are non-null
+
+Parameters used in this template:
+schema = @schema
+cdmTableName = @cdmTableName
+cdmFieldName = @cdmFieldName
+{@cohort &amp; '@runForCohort' == 'Yes'}?{
+cohortDefinitionId = @cohortDefinitionId
+cohortDatabaseSchema = @cohortDatabaseSchema
+cohortTableName = @cohortTableName
+}
+**********/
+
+
+SELECT 
+    num_violated_rows, 
+    CASE 
+        WHEN denominator.num_rows = 0 THEN 0 
+        ELSE 1.0*num_violated_rows/denominator.num_rows
+    END AS pct_violated_rows, 
+    denominator.num_rows AS num_denominator_rows
+FROM (
+    SELECT 
+        COUNT_BIG(violated_rows.violating_field) AS num_violated_rows
+    FROM (
+        /*violatedRowsBegin*/
+        SELECT 
+            '@cdmTableName.@cdmFieldName' AS violating_field, 
+            cdmTable.* 
+        FROM @schema.@cdmTableName cdmTable
+            {@cohort &amp; '@runForCohort' == 'Yes'}?{
+                JOIN @cohortDatabaseSchema.@cohortTableName c
+                    ON cdmTable.person_id = c.subject_id
+                    AND c.cohort_definition_id = @cohortDefinitionId
+            }
+        WHERE cdmTable.@cdmFieldName IS NULL
+        /*violatedRowsEnd*/
+    ) violated_rows
+) violated_row_count,
+( 
+    SELECT 
+        COUNT_BIG(*) AS num_rows
+    FROM @schema.@cdmTableName cdmTable
+        {@cohort &amp; '@runForCohort' == 'Yes'}?{
+            JOIN @cohortDatabaseSchema.@cohortTableName c 
+                ON cdmTable.person_id = c.subject_id
+                AND c.cohort_definition_id = @cohortDefinitionId
+        }
+) denominator
+;</code></pre>
+</div>
+</div>
+<p>Here we’ve observed a failure for the <code>measurement</code> table in the <code>conformance</code> category.</p>
+<section id="convention-check-fkdomain-on-measurement.measurement_concept_id" class="level5">
+<h5 class="anchored" data-anchor-id="convention-check-fkdomain-on-measurement.measurement_concept_id">Convention Check: <code>fkDomain</code> on <code>MEASUREMENT.MEASUREMENT_CONCEPT_ID</code></h5>
+<p>Again we can isolate the SQL used to perform this data quality check:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>  dqChecks <span class="ot">&lt;-</span> DataQualityDashboard<span class="sc">::</span><span class="fu">listDqChecks</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  fkDomainCheck <span class="ot">&lt;-</span> dqChecks<span class="sc">$</span>checkDescriptions <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    .data<span class="sc">$</span>checkName <span class="sc">==</span> <span class="st">"fkDomain"</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the SQL for this check from the DQD package</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  fkDomainCheckSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">readSql</span>(</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sourceFile =</span> <span class="fu">system.file</span>(</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">file.path</span>(<span class="st">"sql"</span>, <span class="st">"sql_server"</span>, fkDomainCheck<span class="sc">$</span>sqlFile),</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">package =</span> <span class="st">"DataQualityDashboard"</span>,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">mustWork =</span> <span class="cn">TRUE</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(fkDomainCheckSql)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+/*********
+FIELD_FK_DOMAIN
+
+Check that all standard concept IDs belong to the appropriate domain for a given table and field.
+
+Parameters used in this template:
+schema = @schema
+vocabDatabaseSchema = @vocabDatabaseSchema
+cdmTableName = @cdmTableName
+cdmFieldName = @cdmFieldName
+fkDomain = @fkDomain
+{@cohort &amp; '@runForCohort' == 'Yes'}?{
+cohortDefinitionId = @cohortDefinitionId
+cohortDatabaseSchema = @cohortDatabaseSchema
+cohortTableName = @cohortTableName
+}
+**********/
+
+SELECT 
+    num_violated_rows, 
+    CASE
+        WHEN denominator.num_rows = 0 THEN 0 
+        ELSE 1.0*num_violated_rows/denominator.num_rows 
+    END AS pct_violated_rows, 
+    denominator.num_rows AS num_denominator_rows
+FROM (
+    SELECT 
+        COUNT_BIG(violated_rows.violating_field) AS num_violated_rows
+    FROM (
+        /*violatedRowsBegin*/
+        SELECT 
+            '@cdmTableName.@cdmFieldName' AS violating_field, 
+            cdmTable.* 
+        FROM @schema.@cdmTableName cdmTable
+            LEFT JOIN @vocabDatabaseSchema.concept co
+            ON cdmTable.@cdmFieldName = co.concept_id
+            {@cohort &amp; '@runForCohort' == 'Yes'}?{
+            JOIN @cohortDatabaseSchema.@cohortTableName c 
+                ON cdmTable.person_id = c.subject_id
+                AND c.cohort_definition_id = @cohortDefinitionId
+        }
+        WHERE co.concept_id != 0 
+            AND co.domain_id NOT IN ('@fkDomain')
+        /*violatedRowsEnd*/
+    ) violated_rows
+) violated_row_count,
+( 
+    SELECT 
+        COUNT_BIG(*) AS num_rows
+    FROM @schema.@cdmTableName cdmTable
+    {@cohort &amp; '@runForCohort' == 'Yes'}?{
+    JOIN @cohortDatabaseSchema.@cohortTableName c 
+        ON cdmTable.PERSON_ID = c.SUBJECT_ID
+        AND c.COHORT_DEFINITION_ID = @cohortDefinitionId
+    }
+) denominator
+;</code></pre>
+</div>
+</div>
+<p>We’ll use this SQL with some modifications to find the offending rows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">        /*violatedRowsBegin*/</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT </span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">            '@cdmTableName.@cdmFieldName' AS violating_field, </span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">            co.concept_name,</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">            co.domain_id,</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="st">            cdmTable.* </span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM @schema.@cdmTableName cdmTable</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="st">            LEFT JOIN @vocabDatabaseSchema.concept co</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="st">            ON cdmTable.@cdmFieldName = co.concept_id</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="st">            {@cohort &amp; '@runForCohort' == 'Yes'}?{</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="st">            JOIN @cohortDatabaseSchema.@cohortTableName c </span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">                ON cdmTable.person_id = c.subject_id</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="st">                AND c.cohort_definition_id = @cohortDefinitionId</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="st">        WHERE co.concept_id != 0 </span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="st">            AND co.domain_id NOT IN ('@fkDomain')</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="st">        /*violatedRowsEnd*/</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>connection <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(<span class="at">connectionDetails =</span> connectionDetails)</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>offendingRows <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">renderTranslateQuerySql</span>(</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">connection =</span> connection,</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">sql =</span> sql,</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">schema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">vocabDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmTableName =</span> <span class="st">'measurement'</span>,</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmFieldName =</span> <span class="st">'measurement_concept_id'</span>,</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">fkDomain =</span> <span class="st">'measurement'</span>,</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">runForCohort =</span> <span class="st">'No'</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="co"># To make the results smaller, filtering to the concept I know is a problem</span></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>offendingRows <span class="sc">|&gt;</span></span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(measurement_concept_id <span class="sc">==</span> <span class="dv">43054909</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     violating_field           concept_name   domain_id
+1 measurement.measurement_concept_id Tobacco smoking status Observation
+  measurement_id person_id measurement_concept_id measurement_date
+1          31164        36               43054909       2005-11-05
+  measurement_datetime measurement_time measurement_type_concept_id
+1           2005-11-05       2005-11-05                       32827
+  operator_concept_id value_as_number value_as_concept_id unit_concept_id
+1                   0              NA                   0               0
+  range_low range_high provider_id visit_occurrence_id visit_detail_id
+1        NA         NA           4                3539         1003539
+  measurement_source_value measurement_source_concept_id unit_source_value
+1                715252007                      37395717              &lt;NA&gt;
+  unit_source_concept_id value_source_value measurement_event_id
+1                     NA               &lt;NA&gt;                   NA
+  meas_event_field_concept_id
+1                          NA</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="characterization-checks" class="level4">
+<h4 class="anchored" data-anchor-id="characterization-checks">Characterization Checks</h4>
+<p>Now we’ll run the characterization checks as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>  checkNames <span class="ot">&lt;-</span> <span class="fu">getDqdChecksBySeverityLevel</span>(<span class="st">"characterization"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  DataQualityDashboard<span class="sc">::</span><span class="fu">executeDqChecks</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectionDetails =</span> connectionDetails,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">resultsDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmSourceName =</span> <span class="st">"DqTutorial"</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFolder =</span> <span class="st">"dqd_output"</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFile =</span> <span class="st">"characterization.json"</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">verboseMode =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">writeToTable =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkLevels =</span> <span class="fu">c</span>(<span class="st">"TABLE"</span>, <span class="st">"FIELD"</span>, <span class="st">"CONCEPT"</span>),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkNames =</span> checkNames,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To then inspect the results via the dashboard run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>DataQualityDashboard<span class="sc">::</span><span class="fu">viewDqDashboard</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">jsonPath =</span> <span class="fu">normalizePath</span>(<span class="st">"dqd_output/characterization.json"</span>, <span class="at">winslash =</span> <span class="st">"/"</span>, <span class="at">mustWork =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 </section>
 </section>
