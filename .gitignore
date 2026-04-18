@@ -1,0 +1,10 @@
+.Rproj.user
+
+/.quarto/
+**/*.quarto_ipynb
+/_freeze/
+/dqd_output/quarto-work/
+/dqd_output/*.txt
+/.vscode/
+/dqd-tutorial_files/
+dqd-tutorial.html

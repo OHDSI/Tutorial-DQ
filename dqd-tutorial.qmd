@@ -1,0 +1,532 @@
+---
+title: "DataQualityDashboard Tutorial"
+format:
+  html:
+    toc: true
+execute:
+  freeze: auto
+---
+
+## Introduction
+
+This tutorial provides an overview of the [DataQualityDashboard](https://github.com/ohdsi/dataqualitydashboard) (DQD) package and how it is used to identify data quality issues in healthcare data transformed to the OMOP Common Data Model (CDM). This example uses a single DuckDB database found in `data/syntheaCDMWithDq.duckdb` which contains curated data quality issues. This database contains both the transformed OMOP CDM schema, `cdm`, and the source data schema, `synthea_native`, so students can move from a DQD finding to the identified CDM record, through the ETL process and back to the source data row to locate where the data quality issue originated.
+
+This tutorial has the following structure:
+
+1. Run DQD for a selected severity level
+2. Inspect the failing check metadata
+3. View the DQD package SQL template behind the check
+4. Run a diagnostic query to identify the records in the CDM
+5. Trace the issue back to the source data schema when needed
+
+## Overview
+
+The following sections will provide an overview of how to work with this project and an overview of using the DataQualityDashboard.
+
+### Environment Setup
+
+Make sure you have restored all of the R packages necessary to run this tutorial. This is done by using the [renv](https://rstudio.github.io/renv/). If you do not have renv installed, you may install it by running:
+
+```{r eval=FALSE}
+install.packages("renv")
+```
+
+Once installed you can restore all of the R packages by calling `renv::restore()`. Follow the prompts and install all of the packages. This can take some time sine there are a lot of dependencies for the project. Once that is done, you will need to restart R to make sure all of the newly installed packages are available. 
+
+### Running DataQualityDashboard (DQD)
+
+To start we need to establish how to connect to our OMOP CDM to run the DataQualityDashboard (DQD). This is done using the `DatabaseConnector` package as shown below:
+
+```{r}
+connectionDetails <- DatabaseConnector::createConnectionDetails(
+  dbms = "duckdb",
+  server = "data/syntheaCDMWithDq.duckdb"
+)
+```
+
+When running DQD against your actual OMOP CDM you will need to change the `connectionDetails` for your environment. More details on how to do this are described in the [DatabaseConnector documentation](https://ohdsi.github.io/DatabaseConnector/reference/createConnectionDetails.html).
+
+Next, we will execute DQD's data quality checks using the `executeDqChecks` command:
+
+```{r eval=FALSE}
+  DataQualityDashboard::executeDqChecks(
+    connectionDetails = connectionDetails,
+    cdmDatabaseSchema = "cdm",
+    resultsDatabaseSchema = "cdm",
+    cdmSourceName = "DqTutorial",
+    outputFolder = "dqd_output",
+    outputFile = "dqd_check_results.json",
+    verboseMode = TRUE,
+    writeToTable = FALSE,
+    checkLevels = c("TABLE", "FIELD", "CONCEPT"),
+    cdmVersion = "5.4"
+  )
+```
+
+The full documentation for this function is found in the DQD documentation: [executeDqChecks](https://ohdsi.github.io/DataQualityDashboard/reference/executeDqChecks.html). To explain a few of the parameters above:
+
+- **connectionDetails**: This is how you tell DQD where to find your OMOP CDM database
+- **cdmDatabaseSchema**: This is the schema name that holds the patient-level OMOP CDM data
+- **resultsDatabaseSchema**: This is the schema that holds the results tables and in our example we've re-used the `cdm` schema for this purpose.
+- **cdmSourceName**: A label for your CDM source
+- **outputFolder & outputFile**: Where to write the output of running DQD. The output is a JSON file.
+- **verboseMode**: Setting this to TRUE for the tutorial so you can monitor the progress of the execution. The default is FALSE.
+- **writeToTable**: You may optionally write the DQD output to tables in your results schema and for our tutorial we've opted to set to this to FALSE.
+- **checkLevels**: What types of data quality checks you'd like to perform
+- **cdmVersion**: The version of your CDM (see [CDM Documentation](https://ohdsi.github.io/CommonDataModel/cdm54.html))
+
+The overall process inside of `executeDqChecks` is that it will connect to your OMOP CDM and perform a series of pre-defined data quality checks. Once complete, the output is written to the `outputFile`. From there you can review the results through an interactive R Shiny results viewer.
+
+### Reviewing results
+
+This code will launch the results viewer for the `outputFile` from above:
+
+```{r eval=FALSE}
+DataQualityDashboard::viewDqDashboard(
+  jsonPath = "dqd_output/dqd_check_results.json"
+)
+```
+
+### Known Issues
+
+The `executeDqChecks` function provide an option to run DQD for different severity levels via a parameter called `checkSeverity`. In preparing this tutorial, We discovered a bug with DQD that prevents us from calling `executeDqChecks` for each severity level as desired. To work-around this issue, we use the DQD package to identify the check severity level and then use these `checkNames` when calling `executeDqChecks`. To do this, we've written a small helper function that will be used in this tutorial:
+
+```{r}
+getDqdChecksBySeverityLevel <- function(severityLevel, cdmVersion = "5.4") {
+  severityLevelChecks <- c("fatal", "convention", "characterization")
+  if (!severityLevel %in% severityLevelChecks) {
+    stop(paste("Invalid severityLevel must be one of:", paste(severityLevelChecks, collapse = ", ")))
+  }
+
+  dqChecks <- DataQualityDashboard::listDqChecks(
+    cdmVersion = cdmVersion
+  )
+  filteredChecks <- dqChecks$checkDescriptions |>
+    dplyr::filter(.data$severity == severityLevel ) |>
+    dplyr::select(checkName) |>
+    dplyr::pull()
+
+  # Adding required checks for DQ
+  filteredChecks <- c(
+    filteredChecks,
+    c("cdmTable", "cdmField", "measureValueCompleteness")
+  )
+  filteredChecks <- unique(filteredChecks)
+  return(filteredChecks)
+}
+```
+
+`getDqdChecksBySeverityLevel` uses DQD to identify the data quality checks by name based on the severity level. It then also adds some additional data quality check names that are required by DQD. The function then returns the list of check names which we can then use to only run the specific data quality checks via `executeDqChecks` via the `checkNames` parameter as shown below:
+
+```{r eval=FALSE}
+  checkNames <- getDqdChecksBySeverityLevel("fatal")
+
+  DataQualityDashboard::executeDqChecks(
+    connectionDetails = connectionDetails,
+    cdmDatabaseSchema = "cdm",
+    resultsDatabaseSchema = "cdm",
+    cdmSourceName = "DqTutorial",
+    outputFolder = "dqd_output",
+    outputFile = "fatal.json",
+    verboseMode = TRUE,
+    writeToTable = FALSE,
+    checkLevels = c("TABLE", "FIELD", "CONCEPT"),
+    checkNames = checkNames,
+    cdmVersion = "5.4"
+  )
+```
+
+Once this bug is fixed, the alternative syntax is to only specify the `checkSeverity` parameter as shown below:
+
+```{r eval=FALSE}
+  DataQualityDashboard::executeDqChecks(
+    connectionDetails = connectionDetails,
+    cdmDatabaseSchema = "cdm",
+    resultsDatabaseSchema = "cdm",
+    cdmSourceName = "DqTutorial",
+    outputFolder = "dqd_output",
+    outputFile = "fatal.json",
+    verboseMode = TRUE,
+    writeToTable = FALSE,
+    checkLevels = c("TABLE", "FIELD", "CONCEPT"),
+    checkSeverity = c("fatal"),
+    cdmVersion = "5.4"
+  )
+```
+
+
+## Data quality framework using DQD
+
+The high-level data quality framework of DQD consists of the following:
+
+- **Source Data**: You have patient-level data that you aim to transform to the OMOP CDM. 
+- **ETL Code**: You have developed some extract-transform-load pipeline to move from source data to the OMOP CDM.
+- **OMOP CDM**: The patient-level data standardized to the OMOP CDM with standardized vocabularies.
+
+### Repository Overview
+
+#### Source Data
+
+In this tutorial, this source data is found in `data/syntheaRawWithDqIssues` where we have curated a few data quality issues for the tutorial. For reference, the cleaned version of this source data with no data quality issues is found in `data/syntheaRaw`, the OMOP vocabularies used are found in `data/vocabulary`. Finally, source data of the clean CDM with no data quality issues is found in `data/syntheaCDM`.
+
+#### ETL Code
+
+The ETL code for this tutorial is found in the [ETLSyntheaBuilder](https://github.com/OHDSI/ETL-Synthea) package. We won't go into the details of how this package works in this tutorial but if you are curious how the source data is transformed into the OMOP CDM, you can find the details in this package.
+
+#### OMOP CDM
+
+The OMOP CDM that we will use in this tutorial is a DuckDB database found in `data/syntheaCDMWithDq.duckdb` and contains the following database schemas:
+
+- `cdm` holds the OMOP CDM tables DQD evaluates
+- `synthea_native` holds the Synthea source data tables loaded by the ETL
+- `main` holds tutorial metadata tables that track the curated issues and fixes
+
+#### Tutorial Code
+
+The code used to define and inject data quality issues is included in this repo for reference. Those code files are found in `PrepareRawIssueSet.R` and `BuildTutorialCdmWithDq.R` and supporting functions are found in the `R` folder. It is not necessary to review these files; they are there mainly for reference for the tutorial authors.
+
+### Using DQD for data quality
+
+Here we will walk through running DQD for the 3 severity levels:
+
+- **Fatal**: Analytic packages will fail if these data quality issues are not fixed.
+- **Convention**: Checks to make sure your CDM adheres to agreed upon [OMOP CDM conventions](https://ohdsi.github.io/CommonDataModel/dataModelConventions.html). 
+- **Characterization**: Rule based checks that may identify potential data quality issues or data artifacts.
+
+We suggest running DQD in stages so that you can fix any fatal issues first, then review and fix any convention issues. From there, running the characterization quality checks will help to identify other potential issues or provide insights into data artifacts about your data.
+
+#### Fatal Checks
+
+To start, you can run DQD for the `fatal` checks and review the results
+
+```{r eval=FALSE}
+  checkNames <- getDqdChecksBySeverityLevel("fatal")
+
+  DataQualityDashboard::executeDqChecks(
+    connectionDetails = connectionDetails,
+    cdmDatabaseSchema = "cdm",
+    resultsDatabaseSchema = "cdm",
+    cdmSourceName = "DqTutorial",
+    outputFolder = "dqd_output",
+    outputFile = "fatal.json",
+    verboseMode = TRUE,
+    writeToTable = FALSE,
+    checkLevels = c("TABLE", "FIELD", "CONCEPT"),
+    checkNames = checkNames,
+    cdmVersion = "5.4"
+  )
+```
+
+To then inspect the results via the dashboard run:
+
+```{r eval=FALSE}
+DataQualityDashboard::viewDqDashboard(
+  jsonPath = normalizePath("dqd_output/fatal.json", winslash = "/", mustWork = TRUE)
+)
+```
+
+The two checks that fail are:
+
+- `measureObservationPeriodOverlap` on `OBSERVATION_PERIOD`
+- `isRequired` on `VISIT_OCCURRENCE.VISIT_END_DATE`
+
+Let's step through how we can inspect these failures in the OMOP CDM. 
+
+##### `measureObservationPeriodOverlap` on `OBSERVATION_PERIOD`
+
+To start, you can get the SQL for the `measureObservationPeriodOverlap` in the dashboard by finding the checks that fail and expanding the details to get the full SQL for the check that failed. Alternatively, you can get the SQL programatically using the following code:
+
+```{r}
+  dqChecks <- DataQualityDashboard::listDqChecks(
+    cdmVersion = "5.4"
+  )
+
+  measureObservationPeriodOverlapCheck <- dqChecks$checkDescriptions |>
+  dplyr::filter(
+    .data$checkName == "measureObservationPeriodOverlap"
+  )
+  
+  # Get the SQL for this check from the DQD package
+  measureObservationPeriodOverlapSql <- SqlRender::readSql(
+    sourceFile = system.file(
+      file.path("sql", "sql_server", measureObservationPeriodOverlapCheck$sqlFile),
+      package = "DataQualityDashboard",
+      mustWork = TRUE
+    )
+  )
+  
+  cat(measureObservationPeriodOverlapSql)
+```
+We'll take the inner part of this query to find the offending rows in our CDM. We'll also modify the query to use a `SELECT *` in place of the `SELECT DISTINCT cdmTable.person_id` to give us more context about the offending rows :
+
+
+```{r}
+sql <- "
+		/*violatedRowsBegin*/
+		SELECT *
+		FROM @cdmDatabaseSchema.observation_period cdmTable
+		{@cohort & '@runForCohort' == 'Yes'}?{
+    		JOIN @cohortDatabaseSchema.@cohortTableName c 
+    		    ON cdmTable.person_id = c.subject_id
+    		    AND c.cohort_definition_id = @cohortDefinitionId
+    	}
+		JOIN @cdmDatabaseSchema.observation_period cdmTable2 
+		    ON cdmTable.person_id = cdmTable2.person_id
+		    AND cdmTable.observation_period_id != cdmTable2.observation_period_id
+		WHERE (cdmTable.observation_period_start_date <= cdmTable2.observation_period_end_date 
+		    AND cdmTable.observation_period_end_date >= cdmTable2.observation_period_start_date)
+		    OR (DATEADD(day, 1, cdmTable.observation_period_end_date) = cdmTable2.observation_period_start_date)
+		    OR (DATEADD(day, 1, cdmTable2.observation_period_end_date) = cdmTable.observation_period_start_date)
+		/*violatedRowsEnd*/
+		"
+connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
+
+offendingRows <- DatabaseConnector::renderTranslateQuerySql(
+  connection = connection,
+  sql = sql,
+  cdmDatabaseSchema = "cdm",
+  cohort = FALSE,
+  runForCohort = 'No'
+)
+DatabaseConnector::disconnect(connection)
+
+offendingRows
+```
+
+As shown above this patient has 2 observation periods that overlap which is a fatal violation of the CDM rules. Knowing how are source data is organized, let's go back to the original Synthea data to look at this patient's records in the `encounter` to see if we can spot any problems in the source data:
+
+```{r}
+
+getSourcePersonSql <- "SELECT * FROM cdm.person where person_id = 1";
+
+connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
+
+cdmPersonData <- DatabaseConnector::querySql(
+  connection = connection,
+  sql = getSourcePersonSql
+)
+
+sql <- "SELECT * FROM synthea_native.encounters where patient = '@patient_id';"
+offendingRows <- DatabaseConnector::renderTranslateQuerySql(
+  connection = connection,
+  sql = sql,
+  patient_id = cdmPersonData$person_source_value
+)
+DatabaseConnector::disconnect(connection)
+```
+
+You can inspect the `offendingRows` manually (it is too verbose to display in this document). Upon review you'll find that it doesn't appear to be an issue with the source data but likely an issue with the ETL that needs investigation.
+
+
+##### `isRequired` on `VISIT_OCCURRENCE.VISIT_END_DATE`
+
+Let's do a similar investigation on this fatal error for the `visit_occurrence` table:
+
+```{r}
+  dqChecks <- DataQualityDashboard::listDqChecks(
+    cdmVersion = "5.4"
+  )
+
+  isRequiredCheck <- dqChecks$checkDescriptions |>
+  dplyr::filter(
+    .data$checkName == "isRequired"
+  )
+  isRequiredCheck
+  
+  # Get the SQL for this check from the DQD package
+  isRequiredCheckSql <- SqlRender::readSql(
+    sourceFile = system.file(
+      file.path("sql", "sql_server", isRequiredCheck$sqlFile),
+      package = "DataQualityDashboard",
+      mustWork = TRUE
+    )
+  )
+  
+  cat(isRequiredCheckSql)
+```
+
+Again we'll use this SQL with some modifications to find the offending rows:
+
+```{r}
+sql <- "
+        /*violatedRowsBegin*/
+        SELECT cdmTable.* 
+        FROM @schema.@cdmTableName cdmTable
+            {@cohort & '@runForCohort' == 'Yes'}?{
+                JOIN @cohortDatabaseSchema.@cohortTableName c
+                    ON cdmTable.person_id = c.subject_id
+                    AND c.cohort_definition_id = @cohortDefinitionId
+            }
+        WHERE cdmTable.@cdmFieldName IS NULL
+        /*violatedRowsEnd*/
+"
+connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
+
+offendingRows <- DatabaseConnector::renderTranslateQuerySql(
+  connection = connection,
+  sql = sql,
+  schema = "cdm",
+  cdmTableName = 'visit_occurrence',
+  cdmFieldName = 'VISIT_END_DATE',
+  cohort = FALSE,
+  runForCohort = 'No'
+)
+DatabaseConnector::disconnect(connection)
+
+offendingRows
+```
+
+#### Convention Checks
+
+Next we'll run the convention checks as follows:
+
+```{r eval=FALSE}
+  checkNames <- getDqdChecksBySeverityLevel("convention")
+
+  DataQualityDashboard::executeDqChecks(
+    connectionDetails = connectionDetails,
+    cdmDatabaseSchema = "cdm",
+    resultsDatabaseSchema = "cdm",
+    cdmSourceName = "DqTutorial",
+    outputFolder = "dqd_output",
+    outputFile = "convention.json",
+    verboseMode = TRUE,
+    writeToTable = FALSE,
+    checkLevels = c("TABLE", "FIELD", "CONCEPT"),
+    checkNames = checkNames,
+    cdmVersion = "5.4"
+  )
+```
+
+To then inspect the results via the dashboard run:
+
+```{r eval=FALSE}
+DataQualityDashboard::viewDqDashboard(
+  jsonPath = normalizePath("dqd_output/convention.json", winslash = "/", mustWork = TRUE)
+)
+```
+
+Let's do a similar investigation on this fatal error for the `visit_occurrence` table:
+
+```{r}
+  dqChecks <- DataQualityDashboard::listDqChecks(
+    cdmVersion = "5.4"
+  )
+
+  isRequiredCheck <- dqChecks$checkDescriptions |>
+  dplyr::filter(
+    .data$checkName == "isRequired"
+  )
+
+  # Get the SQL for this check from the DQD package
+  isRequiredCheckSql <- SqlRender::readSql(
+    sourceFile = system.file(
+      file.path("sql", "sql_server", isRequiredCheck$sqlFile),
+      package = "DataQualityDashboard",
+      mustWork = TRUE
+    )
+  )
+  
+  cat(isRequiredCheckSql)
+```
+
+Here we've observed a failure for the `measurement` table in the `conformance` category.
+
+##### Convention Check: `fkDomain` on `MEASUREMENT.MEASUREMENT_CONCEPT_ID`
+
+Again we can isolate the SQL used to perform this data quality check:
+
+```{r}
+  dqChecks <- DataQualityDashboard::listDqChecks(
+    cdmVersion = "5.4"
+  )
+
+  fkDomainCheck <- dqChecks$checkDescriptions |>
+  dplyr::filter(
+    .data$checkName == "fkDomain"
+  )
+
+  # Get the SQL for this check from the DQD package
+  fkDomainCheckSql <- SqlRender::readSql(
+    sourceFile = system.file(
+      file.path("sql", "sql_server", fkDomainCheck$sqlFile),
+      package = "DataQualityDashboard",
+      mustWork = TRUE
+    )
+  )
+  
+  cat(fkDomainCheckSql)
+```
+
+We'll use this SQL with some modifications to find the offending rows:
+
+```{r}
+sql <- "
+        /*violatedRowsBegin*/
+        SELECT 
+            '@cdmTableName.@cdmFieldName' AS violating_field, 
+            co.concept_name,
+            co.domain_id,
+            cdmTable.* 
+        FROM @schema.@cdmTableName cdmTable
+            LEFT JOIN @vocabDatabaseSchema.concept co
+            ON cdmTable.@cdmFieldName = co.concept_id
+            {@cohort & '@runForCohort' == 'Yes'}?{
+            JOIN @cohortDatabaseSchema.@cohortTableName c 
+                ON cdmTable.person_id = c.subject_id
+                AND c.cohort_definition_id = @cohortDefinitionId
+        }
+        WHERE co.concept_id != 0 
+            AND co.domain_id NOT IN ('@fkDomain')
+        /*violatedRowsEnd*/
+"
+connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
+
+offendingRows <- DatabaseConnector::renderTranslateQuerySql(
+  connection = connection,
+  sql = sql,
+  schema = "cdm",
+  vocabDatabaseSchema = "cdm",
+  cdmTableName = 'measurement',
+  cdmFieldName = 'measurement_concept_id',
+  fkDomain = 'measurement',
+  cohort = FALSE,
+  runForCohort = 'No'
+)
+DatabaseConnector::disconnect(connection)
+
+# To make the results smaller, filtering to the concept I know is a problem
+offendingRows |>
+  dplyr::filter(measurement_concept_id == 43054909) |>
+  dplyr::slice(4)
+```
+
+#### Characterization Checks
+
+Now we'll run the characterization checks as follows:
+
+```{r eval=FALSE}
+  checkNames <- getDqdChecksBySeverityLevel("characterization")
+
+  DataQualityDashboard::executeDqChecks(
+    connectionDetails = connectionDetails,
+    cdmDatabaseSchema = "cdm",
+    resultsDatabaseSchema = "cdm",
+    cdmSourceName = "DqTutorial",
+    outputFolder = "dqd_output",
+    outputFile = "characterization.json",
+    verboseMode = TRUE,
+    writeToTable = FALSE,
+    checkLevels = c("TABLE", "FIELD", "CONCEPT"),
+    checkNames = checkNames,
+    cdmVersion = "5.4"
+  )
+```
+
+To then inspect the results via the dashboard run:
+
+```{r eval=FALSE}
+DataQualityDashboard::viewDqDashboard(
+  jsonPath = normalizePath("dqd_output/characterization.json", winslash = "/", mustWork = TRUE)
+)
+```

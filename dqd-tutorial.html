@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>DataQualityDashboard Tutorial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="dqd-tutorial_files/libs/clipboard/clipboard.min.js"></script>
+<script src="dqd-tutorial_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="dqd-tutorial_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="dqd-tutorial_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="dqd-tutorial_files/libs/quarto-html/popper.min.js"></script>
+<script src="dqd-tutorial_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="dqd-tutorial_files/libs/quarto-html/anchor.min.js"></script>
+<link href="dqd-tutorial_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="dqd-tutorial_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="dqd-tutorial_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="dqd-tutorial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="dqd-tutorial_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#environment-setup" id="toc-environment-setup" class="nav-link" data-scroll-target="#environment-setup">Environment Setup</a></li>
+  <li><a href="#running-dataqualitydashboard-dqd" id="toc-running-dataqualitydashboard-dqd" class="nav-link" data-scroll-target="#running-dataqualitydashboard-dqd">Running DataQualityDashboard (DQD)</a></li>
+  <li><a href="#reviewing-results" id="toc-reviewing-results" class="nav-link" data-scroll-target="#reviewing-results">Reviewing results</a></li>
+  <li><a href="#known-issues" id="toc-known-issues" class="nav-link" data-scroll-target="#known-issues">Known Issues</a></li>
+  </ul></li>
+  <li><a href="#data-quality-framework-using-dqd" id="toc-data-quality-framework-using-dqd" class="nav-link" data-scroll-target="#data-quality-framework-using-dqd">Data quality framework using DQD</a>
+  <ul class="collapse">
+  <li><a href="#repository-overview" id="toc-repository-overview" class="nav-link" data-scroll-target="#repository-overview">Repository Overview</a></li>
+  <li><a href="#using-dqd-for-data-quality" id="toc-using-dqd-for-data-quality" class="nav-link" data-scroll-target="#using-dqd-for-data-quality">Using DQD for data quality</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DataQualityDashboard Tutorial</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This tutorial provides an overview of the <a href="https://github.com/ohdsi/dataqualitydashboard">DataQualityDashboard</a> (DQD) package and how it is used to identify data quality issues in healthcare data transformed to the OMOP Common Data Model (CDM). This example uses a single DuckDB database found in <code>data/syntheaCDMWithDq.duckdb</code> which contains curated data quality issues. This database contains both the transformed OMOP CDM schema, <code>cdm</code>, and the source data schema, <code>synthea_native</code>, so students can move from a DQD finding to the identified CDM record, through the ETL process and back to the source data row to locate where the data quality issue originated.</p>
+<p>This tutorial has the following structure:</p>
+<ol type="1">
+<li>Run DQD for a selected severity level</li>
+<li>Inspect the failing check metadata</li>
+<li>View the DQD package SQL template behind the check</li>
+<li>Run a diagnostic query to identify the records in the CDM</li>
+<li>Trace the issue back to the source data schema when needed</li>
+</ol>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The following sections will provide an overview of how to work with this project and an overview of using the DataQualityDashboard.</p>
+<section id="environment-setup" class="level3">
+<h3 class="anchored" data-anchor-id="environment-setup">Environment Setup</h3>
+<p>Make sure you have restored all of the R packages necessary to run this tutorial. This is done by using the <a href="https://rstudio.github.io/renv/">renv</a>. If you do not have renv installed, you may install it by running:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"renv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Once installed you can restore all of the R packages by calling <code>renv::restore()</code>. Follow the prompts and install all of the packages. This can take some time sine there are a lot of dependencies for the project. Once that is done, you will need to restart R to make sure all of the newly installed packages are available.</p>
+</section>
+<section id="running-dataqualitydashboard-dqd" class="level3">
+<h3 class="anchored" data-anchor-id="running-dataqualitydashboard-dqd">Running DataQualityDashboard (DQD)</h3>
+<p>To start we need to establish how to connect to our OMOP CDM to run the DataQualityDashboard (DQD). This is done using the <code>DatabaseConnector</code> package as shown below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>connectionDetails <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">createConnectionDetails</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbms =</span> <span class="st">"duckdb"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">server =</span> <span class="st">"data/syntheaCDMWithDq.duckdb"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>When running DQD against your actual OMOP CDM you will need to change the <code>connectionDetails</code> for your environment. More details on how to do this are described in the <a href="https://ohdsi.github.io/DatabaseConnector/reference/createConnectionDetails.html">DatabaseConnector documentation</a>.</p>
+<p>Next, we will execute DQD’s data quality checks using the <code>executeDqChecks</code> command:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  DataQualityDashboard<span class="sc">::</span><span class="fu">executeDqChecks</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectionDetails =</span> connectionDetails,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">resultsDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmSourceName =</span> <span class="st">"DqTutorial"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFolder =</span> <span class="st">"dqd_output"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFile =</span> <span class="st">"dqd_check_results.json"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">verboseMode =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">writeToTable =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkLevels =</span> <span class="fu">c</span>(<span class="st">"TABLE"</span>, <span class="st">"FIELD"</span>, <span class="st">"CONCEPT"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The full documentation for this function is found in the DQD documentation: <a href="https://ohdsi.github.io/DataQualityDashboard/reference/executeDqChecks.html">executeDqChecks</a>. To explain a few of the parameters above:</p>
+<ul>
+<li><strong>connectionDetails</strong>: This is how you tell DQD where to find your OMOP CDM database</li>
+<li><strong>cdmDatabaseSchema</strong>: This is the schema name that holds the patient-level OMOP CDM data</li>
+<li><strong>resultsDatabaseSchema</strong>: This is the schema that holds the results tables and in our example we’ve re-used the <code>cdm</code> schema for this purpose.</li>
+<li><strong>cdmSourceName</strong>: A label for your CDM source</li>
+<li><strong>outputFolder &amp; outputFile</strong>: Where to write the output of running DQD. The output is a JSON file.</li>
+<li><strong>verboseMode</strong>: Setting this to TRUE for the tutorial so you can monitor the progress of the execution. The default is FALSE.</li>
+<li><strong>writeToTable</strong>: You may optionally write the DQD output to tables in your results schema and for our tutorial we’ve opted to set to this to FALSE.</li>
+<li><strong>checkLevels</strong>: What types of data quality checks you’d like to perform</li>
+<li><strong>cdmVersion</strong>: The version of your CDM (see <a href="https://ohdsi.github.io/CommonDataModel/cdm54.html">CDM Documentation</a>)</li>
+</ul>
+<p>The overall process inside of <code>executeDqChecks</code> is that it will connect to your OMOP CDM and perform a series of pre-defined data quality checks. Once complete, the output is written to the <code>outputFile</code>. From there you can review the results through an interactive R Shiny results viewer.</p>
+</section>
+<section id="reviewing-results" class="level3">
+<h3 class="anchored" data-anchor-id="reviewing-results">Reviewing results</h3>
+<p>This code will launch the results viewer for the <code>outputFile</code> from above:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>DataQualityDashboard<span class="sc">::</span><span class="fu">viewDqDashboard</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">jsonPath =</span> <span class="st">"dqd_output/dqd_check_results.json"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="known-issues" class="level3">
+<h3 class="anchored" data-anchor-id="known-issues">Known Issues</h3>
+<p>The <code>executeDqChecks</code> function provide an option to run DQD for different severity levels via a parameter called <code>checkSeverity</code>. In preparing this tutorial, We discovered a bug with DQD that prevents us from calling <code>executeDqChecks</code> for each severity level as desired. To work-around this issue, we use the DQD package to identify the check severity level and then use these <code>checkNames</code> when calling <code>executeDqChecks</code>. To do this, we’ve written a small helper function that will be used in this tutorial:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>getDqdChecksBySeverityLevel <span class="ot">&lt;-</span> <span class="cf">function</span>(severityLevel, <span class="at">cdmVersion =</span> <span class="st">"5.4"</span>) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  severityLevelChecks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"fatal"</span>, <span class="st">"convention"</span>, <span class="st">"characterization"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>severityLevel <span class="sc">%in%</span> severityLevelChecks) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"Invalid severityLevel must be one of:"</span>, <span class="fu">paste</span>(severityLevelChecks, <span class="at">collapse =</span> <span class="st">", "</span>)))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  dqChecks <span class="ot">&lt;-</span> DataQualityDashboard<span class="sc">::</span><span class="fu">listDqChecks</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> cdmVersion</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  filteredChecks <span class="ot">&lt;-</span> dqChecks<span class="sc">$</span>checkDescriptions <span class="sc">|&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>severity <span class="sc">==</span> severityLevel ) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(checkName) <span class="sc">|&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">pull</span>()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adding required checks for DQ</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  filteredChecks <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    filteredChecks,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"cdmTable"</span>, <span class="st">"cdmField"</span>, <span class="st">"measureValueCompleteness"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  filteredChecks <span class="ot">&lt;-</span> <span class="fu">unique</span>(filteredChecks)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(filteredChecks)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>getDqdChecksBySeverityLevel</code> uses DQD to identify the data quality checks by name based on the severity level. It then also adds some additional data quality check names that are required by DQD. The function then returns the list of check names which we can then use to only run the specific data quality checks via <code>executeDqChecks</code> via the <code>checkNames</code> parameter as shown below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  checkNames <span class="ot">&lt;-</span> <span class="fu">getDqdChecksBySeverityLevel</span>(<span class="st">"fatal"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  DataQualityDashboard<span class="sc">::</span><span class="fu">executeDqChecks</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectionDetails =</span> connectionDetails,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">resultsDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmSourceName =</span> <span class="st">"DqTutorial"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFolder =</span> <span class="st">"dqd_output"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFile =</span> <span class="st">"fatal.json"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">verboseMode =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">writeToTable =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkLevels =</span> <span class="fu">c</span>(<span class="st">"TABLE"</span>, <span class="st">"FIELD"</span>, <span class="st">"CONCEPT"</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkNames =</span> checkNames,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Once this bug is fixed, the alternative syntax is to only specify the <code>checkSeverity</code> parameter as shown below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  DataQualityDashboard<span class="sc">::</span><span class="fu">executeDqChecks</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectionDetails =</span> connectionDetails,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">resultsDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmSourceName =</span> <span class="st">"DqTutorial"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFolder =</span> <span class="st">"dqd_output"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFile =</span> <span class="st">"fatal.json"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">verboseMode =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">writeToTable =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkLevels =</span> <span class="fu">c</span>(<span class="st">"TABLE"</span>, <span class="st">"FIELD"</span>, <span class="st">"CONCEPT"</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkSeverity =</span> <span class="fu">c</span>(<span class="st">"fatal"</span>),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="data-quality-framework-using-dqd" class="level2">
+<h2 class="anchored" data-anchor-id="data-quality-framework-using-dqd">Data quality framework using DQD</h2>
+<p>The high-level data quality framework of DQD consists of the following:</p>
+<ul>
+<li><strong>Source Data</strong>: You have patient-level data that you aim to transform to the OMOP CDM.</li>
+<li><strong>ETL Code</strong>: You have developed some extract-transform-load pipeline to move from source data to the OMOP CDM.</li>
+<li><strong>OMOP CDM</strong>: The patient-level data standardized to the OMOP CDM with standardized vocabularies.</li>
+</ul>
+<section id="repository-overview" class="level3">
+<h3 class="anchored" data-anchor-id="repository-overview">Repository Overview</h3>
+<section id="source-data" class="level4">
+<h4 class="anchored" data-anchor-id="source-data">Source Data</h4>
+<p>In this tutorial, this source data is found in <code>data/syntheaRawWithDqIssues</code> where we have curated a few data quality issues for the tutorial. For reference, the cleaned version of this source data with no data quality issues is found in <code>data/syntheaRaw</code>, the OMOP vocabularies used are found in <code>data/vocabulary</code>. Finally, source data of the clean CDM with no data quality issues is found in <code>data/syntheaCDM</code>.</p>
+</section>
+<section id="etl-code" class="level4">
+<h4 class="anchored" data-anchor-id="etl-code">ETL Code</h4>
+<p>The ETL code for this tutorial is found in the <a href="https://github.com/OHDSI/ETL-Synthea">ETLSyntheaBuilder</a> package. We won’t go into the details of how this package works in this tutorial but if you are curious how the source data is transformed into the OMOP CDM, you can find the details in this package.</p>
+</section>
+<section id="omop-cdm" class="level4">
+<h4 class="anchored" data-anchor-id="omop-cdm">OMOP CDM</h4>
+<p>The OMOP CDM that we will use in this tutorial is a DuckDB database found in <code>data/syntheaCDMWithDq.duckdb</code> and contains the following database schemas:</p>
+<ul>
+<li><code>cdm</code> holds the OMOP CDM tables DQD evaluates</li>
+<li><code>synthea_native</code> holds the Synthea source data tables loaded by the ETL</li>
+<li><code>main</code> holds tutorial metadata tables that track the curated issues and fixes</li>
+</ul>
+</section>
+<section id="tutorial-code" class="level4">
+<h4 class="anchored" data-anchor-id="tutorial-code">Tutorial Code</h4>
+<p>The code used to define and inject data quality issues is included in this repo for reference. Those code files are found in <code>PrepareRawIssueSet.R</code> and <code>BuildTutorialCdmWithDq.R</code> and supporting functions are found in the <code>R</code> folder. It is not necessary to review these files; they are there mainly for reference for the tutorial authors.</p>
+</section>
+</section>
+<section id="using-dqd-for-data-quality" class="level3">
+<h3 class="anchored" data-anchor-id="using-dqd-for-data-quality">Using DQD for data quality</h3>
+<p>Here we will walk through running DQD for the 3 severity levels:</p>
+<ul>
+<li><strong>Fatal</strong>: Analytic packages will fail if these data quality issues are not fixed.</li>
+<li><strong>Convention</strong>: Checks to make sure your CDM adheres to agreed upon <a href="https://ohdsi.github.io/CommonDataModel/dataModelConventions.html">OMOP CDM conventions</a>.</li>
+<li><strong>Characterization</strong>: Rule based checks that may identify potential data quality issues or data artifacts.</li>
+</ul>
+<p>We suggest running DQD in stages so that you can fix any fatal issues first, then review and fix any convention issues. From there, running the characterization quality checks will help to identify other potential issues or provide insights into data artifacts about your data.</p>
+<section id="fatal-checks" class="level4">
+<h4 class="anchored" data-anchor-id="fatal-checks">Fatal Checks</h4>
+<p>To start, you can run DQD for the <code>fatal</code> checks and review the results</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  checkNames <span class="ot">&lt;-</span> <span class="fu">getDqdChecksBySeverityLevel</span>(<span class="st">"fatal"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  DataQualityDashboard<span class="sc">::</span><span class="fu">executeDqChecks</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">connectionDetails =</span> connectionDetails,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">resultsDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmSourceName =</span> <span class="st">"DqTutorial"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFolder =</span> <span class="st">"dqd_output"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">outputFile =</span> <span class="st">"fatal.json"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">verboseMode =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">writeToTable =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkLevels =</span> <span class="fu">c</span>(<span class="st">"TABLE"</span>, <span class="st">"FIELD"</span>, <span class="st">"CONCEPT"</span>),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">checkNames =</span> checkNames,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To then inspect the results via the dashboard run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>DataQualityDashboard<span class="sc">::</span><span class="fu">viewDqDashboard</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">jsonPath =</span> <span class="fu">normalizePath</span>(<span class="st">"dqd_output/fatal.json"</span>, <span class="at">winslash =</span> <span class="st">"/"</span>, <span class="at">mustWork =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The two checks that fail are:</p>
+<ul>
+<li><code>measureObservationPeriodOverlap</code> on <code>OBSERVATION_PERIOD</code></li>
+<li><code>isRequired</code> on <code>VISIT_OCCURRENCE.VISIT_END_DATE</code></li>
+</ul>
+<p>Let’s step through how we can inspect these failures in the OMOP CDM.</p>
+<section id="measureobservationperiodoverlap-on-observation_period" class="level5">
+<h5 class="anchored" data-anchor-id="measureobservationperiodoverlap-on-observation_period"><code>measureObservationPeriodOverlap</code> on <code>OBSERVATION_PERIOD</code></h5>
+<p>To start, you can get the SQL for the <code>measureObservationPeriodOverlap</code> in the dashboard by finding the checks that fail and expanding the details to get the full SQL for the check that failed. Alternatively, you can get the SQL programatically using the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  dqChecks <span class="ot">&lt;-</span> DataQualityDashboard<span class="sc">::</span><span class="fu">listDqChecks</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">cdmVersion =</span> <span class="st">"5.4"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  measureObservationPeriodOverlapCheck <span class="ot">&lt;-</span> dqChecks<span class="sc">$</span>checkDescriptions <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    .data<span class="sc">$</span>checkName <span class="sc">==</span> <span class="st">"measureObservationPeriodOverlap"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the SQL for this check from the DQD package</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  measureObservationPeriodOverlapSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">readSql</span>(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sourceFile =</span> <span class="fu">system.file</span>(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">file.path</span>(<span class="st">"sql"</span>, <span class="st">"sql_server"</span>, measureObservationPeriodOverlapCheck<span class="sc">$</span>sqlFile),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">package =</span> <span class="st">"DataQualityDashboard"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">mustWork =</span> <span class="cn">TRUE</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(measureObservationPeriodOverlapSql)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/*********
+Table Level:  
+MEASURE_OBSERVATION_PERIOD_OVERLAP
+Determine what #/% of persons have overlapping or back-to-back observation periods
+
+Parameters used in this template:
+schema = @schema
+cdmTableName = @cdmTableName
+{@cohort &amp; '@runForCohort' == 'Yes'}?{
+cohortDefinitionId = @cohortDefinitionId
+cohortDatabaseSchema = @cohortDatabaseSchema
+cohortTableName = @cohortTableName
+}
+**********/
+
+
+SELECT 
+    num_violated_rows, 
+    CASE 
+        WHEN denominator.num_rows = 0 THEN 0 
+        ELSE 1.0*num_violated_rows/denominator.num_rows 
+    END AS pct_violated_rows, 
+    denominator.num_rows AS num_denominator_rows
+FROM
+(
+    SELECT 
+        COUNT_BIG(violated_rows.person_id) AS num_violated_rows
+    FROM
+    (
+        /*violatedRowsBegin*/
+        SELECT DISTINCT
+            cdmTable.person_id 
+        FROM @cdmDatabaseSchema.observation_period cdmTable
+        {@cohort &amp; '@runForCohort' == 'Yes'}?{
+            JOIN @cohortDatabaseSchema.@cohortTableName c 
+                ON cdmTable.person_id = c.subject_id
+                AND c.cohort_definition_id = @cohortDefinitionId
+        }
+        JOIN @cdmDatabaseSchema.observation_period cdmTable2 
+            ON cdmTable.person_id = cdmTable2.person_id
+            AND cdmTable.observation_period_id != cdmTable2.observation_period_id
+        WHERE (cdmTable.observation_period_start_date &lt;= cdmTable2.observation_period_end_date 
+            AND cdmTable.observation_period_end_date &gt;= cdmTable2.observation_period_start_date)
+            OR (DATEADD(day, 1, cdmTable.observation_period_end_date) = cdmTable2.observation_period_start_date)
+            OR (DATEADD(day, 1, cdmTable2.observation_period_end_date) = cdmTable.observation_period_start_date)
+        /*violatedRowsEnd*/
+    ) violated_rows
+) violated_row_count,
+( 
+    SELECT 
+        COUNT_BIG(DISTINCT cdmTable.person_id) AS num_rows
+    FROM @cdmDatabaseSchema.observation_period cdmTable
+    {@cohort &amp; '@runForCohort' == 'Yes'}?{
+        JOIN @cohortDatabaseSchema.@cohortTableName c 
+            ON cdmTable.person_id = c.subject_id
+            AND c.cohort_definition_id = @cohortDefinitionId
+    }
+) denominator
+;</code></pre>
+</div>
+</div>
+<p>We’ll take the inner part of this query to find the offending rows in our CDM. We’ll also modify the query to use a <code>SELECT *</code> in place of the <code>SELECT DISTINCT cdmTable.person_id</code> to give us more context about the offending rows :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">        /*violatedRowsBegin*/</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT *</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM @cdmDatabaseSchema.observation_period cdmTable</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">        {@cohort &amp; '@runForCohort' == 'Yes'}?{</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">            JOIN @cohortDatabaseSchema.@cohortTableName c </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">                ON cdmTable.person_id = c.subject_id</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">                AND c.cohort_definition_id = @cohortDefinitionId</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="st">        JOIN @cdmDatabaseSchema.observation_period cdmTable2 </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="st">            ON cdmTable.person_id = cdmTable2.person_id</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="st">            AND cdmTable.observation_period_id != cdmTable2.observation_period_id</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="st">        WHERE (cdmTable.observation_period_start_date &lt;= cdmTable2.observation_period_end_date </span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="st">            AND cdmTable.observation_period_end_date &gt;= cdmTable2.observation_period_start_date)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="st">            OR (DATEADD(day, 1, cdmTable.observation_period_end_date) = cdmTable2.observation_period_start_date)</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="st">            OR (DATEADD(day, 1, cdmTable2.observation_period_end_date) = cdmTable.observation_period_start_date)</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="st">        /*violatedRowsEnd*/</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="st">        "</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>connection <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(<span class="at">connectionDetails =</span> connectionDetails)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>offendingRows <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">renderTranslateQuerySql</span>(</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">connection =</span> connection,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">sql =</span> sql,</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmDatabaseSchema =</span> <span class="st">"cdm"</span>,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">runForCohort =</span> <span class="st">'No'</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>offendingRows</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  observation_period_id person_id observation_period_start_date
+1                     1         1                    1988-12-10
+2                   110         1                    1988-12-10
+  observation_period_end_date period_type_concept_id observation_period_id
+1                  2025-04-25                  32882                   110
+2                  2025-04-25                  32882                     1
+  person_id observation_period_start_date observation_period_end_date
+1         1                    1988-12-10                  2025-04-25
+2         1                    1988-12-10                  2025-04-25
+  period_type_concept_id
+1                  32882
+2                  32882</code></pre>
+</div>
+</div>
+<p>As shown above this patient has 2 observation periods that overlap which is a fatal violation of the CDM rules. Knowing how are source data is organized, let’s go back to the original Synthea data to look at this patient’s records in the <code>encounter</code> to see if we can spot any problems in the source data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>getSourcePersonSql <span class="ot">&lt;-</span> <span class="st">"SELECT * FROM cdm.person where person_id = 1"</span>;</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>connection <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(<span class="at">connectionDetails =</span> connectionDetails)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>cdmPersonData <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">querySql</span>(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">connection =</span> connection,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">sql =</span> getSourcePersonSql</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">"SELECT * FROM synthea_native.encounters where patient = '@patient_id';"</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>offendingRows <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">renderTranslateQuerySql</span>(</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">connection =</span> connection,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">sql =</span> sql,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">patient_id =</span> cdmPersonData<span class="sc">$</span>person_source_value</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>offendingRows</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                     Id      START       STOP
+1  4a4c72f5-c96e-d2a3-a13e-3a594d80b9e9 1988-12-10 1988-12-10
+2  9bb588fc-5ba6-9c71-f69d-2049a1ea52f0 1992-12-19 1992-12-19
+3  164cc8f0-7429-5b16-2b33-dd42b969423f 1993-12-25 1993-12-25
+4  436bf43f-13e9-beac-bf21-548caa1df6f0 2000-01-01 2000-01-01
+5  266cbbec-17e4-04bf-a21a-6846c8d62d83 2003-01-04 2003-01-04
+6  322b22af-8ef5-6605-7c19-32615f0ab4fd 2005-08-27 2005-08-27
+7  008d733b-8a84-3b91-dfff-cab465f1652e 2005-10-22 2005-10-22
+8  6c2b614b-8dac-7397-659c-488145d40efa 2005-11-19 2005-11-19
+9  3ca65228-0fa7-401f-3ac1-83f57b01644d 2005-12-17 2005-12-17
+10 fb4b5423-02bc-3595-d56b-c3d89d2cd97a 2006-01-07 2006-01-07
+11 6f21b3f9-f153-eb6c-4292-c887d798428c 2006-01-14 2006-01-14
+12 5d6f2553-05e9-1c64-9343-694ed40d9163 2006-01-21 2006-01-21
+13 628d3cd3-35e9-5838-a8b7-72aa2fd28a3e 2006-02-11 2006-02-11
+14 2a831cda-ad85-9e67-076d-8e79710b33a7 2006-03-11 2006-03-11
+15 db0259f1-466c-3631-bd59-f57532a57e78 2006-03-25 2006-03-25
+16 5e05bce1-9e4f-064d-34c0-8b3bf569374c 2006-05-06 2006-05-06
+17 edc1a72f-564d-c434-65f0-c71f27f875d1 2006-05-13 2006-05-13
+18 3b78a4c7-63d3-b7f2-c77b-39b460530b71 2008-06-21 2008-06-21
+19 94a9d063-c996-9c30-97bb-1f8863bc7ceb 2008-07-19 2008-07-19
+20 c1b15642-82b3-ca7a-f8a1-8a688e4321fb 2008-08-16 2008-08-16
+21 11abc16c-05b8-ff3f-1454-2d892f68b6f8 2008-09-13 2008-09-13
+22 ff69fc5e-efd7-6aa8-7d18-186125cff529 2008-10-11 2008-10-11
+23 120ce5f9-8d80-19bb-4a68-b16c1ad47fab 2008-11-08 2008-11-08
+24 48959405-9aa6-ff76-1628-793bab0c0587 2008-12-06 2008-12-06
+25 a601e2e8-7d9d-1b6b-6385-0af41c66a5ef 2009-01-03 2009-01-03
+26 4b632ecb-7ebb-bf4a-d2a8-dec29761d0c8 2009-01-10 2009-01-10
+27 c1157939-fe40-56c2-b959-b45509a6397d 2009-01-17 2009-01-17
+28 ade2bcca-22fc-6ce3-7cac-05039d91c4e9 2009-01-24 2009-01-24
+29 5b98fb65-6109-2523-e059-93ba36a36812 2009-01-31 2009-01-31
+30 ad3b8c3a-1f35-c785-f60d-6563535a282e 2009-02-07 2009-02-07
+31 0767212d-7870-2787-0b8d-36195866270c 2009-03-21 2009-03-21
+32 8b75c016-e333-5fd5-211a-d30d7f224127 2009-06-17 2009-06-17
+33 15bc213b-18cd-b4c8-8f8a-3c5c141c8cb6 2010-03-23 2010-03-23
+34 7357411b-7535-a6bd-b879-bcf2f943b325 2010-04-02 2010-04-03
+35 c5432e7a-bbe9-5fc5-e033-d8fddd17fb47 2011-07-22 2011-07-22
+36 345f2d76-5c69-f240-658c-3e87cdd1a485 2011-10-14 2011-10-14
+37 d065034a-8ba5-0f56-cebe-cf3032aad78a 2011-10-22 2011-10-22
+38 bb2c5db0-5acb-c8b7-31c9-62e2dea75aba 2012-01-14 2012-01-14
+39 5093753a-ba49-d7e2-0282-ac1cb2bf239b 2012-01-28 2012-01-28
+40 1514210b-8fee-297a-2fab-31be1a5ff9c6 2012-02-25 2012-02-26
+41 48540a5a-c7e2-48eb-09b0-81af34789e35 2012-04-30 2012-04-30
+42 ff08570e-8d1b-833b-01bf-19eed73ebf0a 2014-11-01 2014-11-01
+43 62094440-bf02-e49a-bdb1-e964f550252b 2014-11-15 2014-11-15
+44 951653ac-2f7d-d881-a69a-86608e76b7d9 2016-09-10 2016-09-10
+45 0150e57c-c594-b54b-c2ed-96678a66aa7d 2016-09-17 2016-09-17
+46 3284d8a6-59d2-b804-8f5c-97b0a6d5593d 2016-11-05 2016-11-05
+47 f2ac4a16-a919-f1c0-b5c7-846913fa0f7c 2016-11-19 2016-11-19
+48 f93555a5-9117-14b8-7af1-718818c56d47 2018-11-10 2018-11-10
+49 a8b72c32-9512-7285-61fd-9f7b4158c3f5 2018-11-24 2018-11-24
+50 aa0aa91b-6ce6-d58d-86dd-d33d0da97e65 2019-04-24 2019-04-24
+51 91430d97-a8b7-32d6-82db-1129b3df2f02 2019-05-25 2019-05-26
+52 c9d59bf1-1e05-6bd5-ee86-3c0fef59f271 2020-10-30 2020-10-30
+53 2f704f48-fcb2-ae8c-f647-ed88954927f6 2020-11-14 2020-11-14
+54 b3ccb525-6b42-50b7-7f36-82043b83021b 2020-11-28 2020-11-28
+55 66e2b441-84f3-8872-4ace-7637cddcf794 2021-05-22 2021-05-22
+56 5ff08730-0040-8b57-4921-2674ec7497a0 2021-06-19 2021-06-19
+57 ca6161ee-b5ab-6a50-9455-3a010a656118 2021-11-20 2021-11-20
+58 81688d1d-cd50-3634-c0a5-0fba49a24bd7 2021-11-27 2021-11-27
+59 bac6de50-b9e1-f35f-ff9e-7d2bde5d14e8 2021-12-04 2021-12-04
+60 26a077f3-945b-d509-9de4-40abfb9208a9 2022-07-09 2022-07-09
+61 31c38eb4-ffff-9bd0-43a7-ab8a9fbe70fb 2022-11-26 2022-11-26
+62 11edeb00-3563-71e7-0353-feb16a252148 2022-12-10 2022-12-10
+63 2f54a286-7b63-3cb7-31b4-f1f9b328ec94 2023-12-02 2023-12-02
+64 7d97186e-7424-da1a-e767-49a83732509c 2023-12-16 2023-12-16
+65 36f9f80c-e914-3e3d-493e-f5cedca65a61 2024-10-26 2024-10-26
+66 566f4d3f-c481-a067-86ee-d59e0fdb2e10 2024-12-07 2024-12-07
+67 3da1be5b-f216-5a03-2b4b-8c7d0b0d22e3 2025-04-25 2025-04-25
+                                PATIENT                         ORGANIZATION
+1  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+2  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+3  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+4  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+5  01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+6  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+7  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+8  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+9  01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+10 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+11 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+12 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+13 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+14 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+15 01e81e92-fd67-a663-8a01-fec9785e5074 215604a8-f8be-3023-add7-9ab05336faf8
+16 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+17 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
+18 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+19 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+20 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+21 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+22 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+23 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+24 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+25 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+26 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+27 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+28 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+29 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+30 01e81e92-fd67-a663-8a01-fec9785e5074 215604a8-f8be-3023-add7-9ab05336faf8
+31 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+32 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+33 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
+34 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+35 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+36 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+37 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
+38 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+39 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+40 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+41 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+42 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+43 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+44 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
+45 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+46 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+47 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+48 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+49 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+50 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+51 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+52 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+53 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+54 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+55 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
+56 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
+57 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+58 01e81e92-fd67-a663-8a01-fec9785e5074 c558d6ec-e1f0-398f-abda-9e4f7f16049d
+59 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+60 01e81e92-fd67-a663-8a01-fec9785e5074 215604a8-f8be-3023-add7-9ab05336faf8
+61 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+62 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+63 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+64 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+65 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+66 01e81e92-fd67-a663-8a01-fec9785e5074 cd327c7b-1a33-3a5e-a0ab-3040f066ea71
+67 01e81e92-fd67-a663-8a01-fec9785e5074 c36b758f-b755-352d-99d3-cdd3fb576dbe
+                               PROVIDER                                PAYER
+1  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+2  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
+3  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
+4  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
+5  0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
+6  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+7  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+8  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+9  43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+10 0cf3f543-f773-33d3-9704-909c0d8705e7 e03e23c9-4df1-3eb6-a62d-f70f02301496
+11 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+12 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+13 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+14 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+15 2b3a122a-c23b-3c97-a6cc-50a18692018c e03e23c9-4df1-3eb6-a62d-f70f02301496
+16 43ec25e6-44ed-38f7-917f-8a7e9da5917e e03e23c9-4df1-3eb6-a62d-f70f02301496
+17 46bd53a3-a8f9-3003-9ea1-430aee6e5324 e03e23c9-4df1-3eb6-a62d-f70f02301496
+18 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+19 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+20 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+21 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+22 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+23 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+24 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+25 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+26 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+27 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+28 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+29 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+30 2b3a122a-c23b-3c97-a6cc-50a18692018c 0133f751-9229-3cfd-815f-b6d4979bdd6a
+31 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+32 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+33 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
+34 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+35 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+36 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+37 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
+38 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+39 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+40 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+41 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+42 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+43 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+44 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
+45 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+46 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+47 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+48 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+49 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+50 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+51 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+52 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+53 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+54 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+55 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
+56 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
+57 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+58 46bd53a3-a8f9-3003-9ea1-430aee6e5324 0133f751-9229-3cfd-815f-b6d4979bdd6a
+59 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+60 2b3a122a-c23b-3c97-a6cc-50a18692018c 0133f751-9229-3cfd-815f-b6d4979bdd6a
+61 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+62 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+63 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+64 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+65 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+66 0cf3f543-f773-33d3-9704-909c0d8705e7 0133f751-9229-3cfd-815f-b6d4979bdd6a
+67 43ec25e6-44ed-38f7-917f-8a7e9da5917e 0133f751-9229-3cfd-815f-b6d4979bdd6a
+   ENCOUNTERCLASS      CODE
+1      ambulatory 185349003
+2        wellness 162673000
+3        wellness 162673000
+4        wellness 162673000
+5        wellness 162673000
+6      ambulatory 424441002
+7      ambulatory 424619006
+8      ambulatory 424619006
+9      ambulatory 424619006
+10       wellness 162673000
+11     ambulatory 424619006
+12     ambulatory 185349003
+13     ambulatory 424619006
+14     ambulatory 424619006
+15      emergency 183460006
+16     ambulatory 169762003
+17     outpatient 698314001
+18     ambulatory 424441002
+19     ambulatory 424619006
+20     ambulatory 424619006
+21     ambulatory 424619006
+22     ambulatory 424619006
+23     ambulatory 424619006
+24     ambulatory 424619006
+25     ambulatory 424619006
+26       wellness 162673000
+27     ambulatory 185347001
+28     ambulatory 424619006
+29     ambulatory 185349003
+30      emergency 183460006
+31     ambulatory 169762003
+32     ambulatory 185345009
+33     outpatient 698314001
+34      inpatient 305408004
+35     ambulatory 185345009
+36     ambulatory 185345009
+37     outpatient 185349003
+38       wellness 162673000
+39     ambulatory 185349003
+40      inpatient  32485007
+41     ambulatory 185345009
+42       wellness 162673000
+43     ambulatory 185349003
+44     outpatient 185349003
+45     ambulatory 185345009
+46       wellness 162673000
+47     ambulatory 185349003
+48       wellness 162673000
+49     ambulatory 185349003
+50     ambulatory 185345009
+51      inpatient  32485007
+52     ambulatory 185345009
+53       wellness 162673000
+54     ambulatory 185349003
+55     outpatient  33879002
+56     outpatient  33879002
+57       wellness 162673000
+58     outpatient 185349003
+59     ambulatory 185345009
+60      emergency  50849002
+61       wellness 162673000
+62     ambulatory 185349003
+63       wellness 162673000
+64     ambulatory 185349003
+65     ambulatory 185349003
+66       wellness 162673000
+67     ambulatory 185345009
+                                                        DESCRIPTION
+1                                Encounter for check up (procedure)
+2                        General examination of patient (procedure)
+3                        General examination of patient (procedure)
+4                        General examination of patient (procedure)
+5                        General examination of patient (procedure)
+6                                            Prenatal initial visit
+7                                                    Prenatal visit
+8                                                    Prenatal visit
+9                                                    Prenatal visit
+10                       General examination of patient (procedure)
+11                                                   Prenatal visit
+12                               Encounter for check up (procedure)
+13                                                   Prenatal visit
+14                                                   Prenatal visit
+15                           Obstetric emergency hospital admission
+16                                                  Postnatal visit
+17                                       Consultation for treatment
+18                                           Prenatal initial visit
+19                                                   Prenatal visit
+20                                                   Prenatal visit
+21                                                   Prenatal visit
+22                                                   Prenatal visit
+23                                                   Prenatal visit
+24                                                   Prenatal visit
+25                                                   Prenatal visit
+26                       General examination of patient (procedure)
+27                                            Encounter for problem
+28                                                   Prenatal visit
+29                               Encounter for check up (procedure)
+30                           Obstetric emergency hospital admission
+31                                                  Postnatal visit
+32                                            Encounter for symptom
+33                                       Consultation for treatment
+34                                 Admission to surgical department
+35                                            Encounter for symptom
+36                                            Encounter for symptom
+37                               Encounter for check up (procedure)
+38                       General examination of patient (procedure)
+39                               Encounter for check up (procedure)
+40                                   Hospital admission (procedure)
+41                                            Encounter for symptom
+42                       General examination of patient (procedure)
+43                               Encounter for check up (procedure)
+44                               Encounter for check up (procedure)
+45                                            Encounter for symptom
+46                       General examination of patient (procedure)
+47                               Encounter for check up (procedure)
+48                       General examination of patient (procedure)
+49                               Encounter for check up (procedure)
+50                                            Encounter for symptom
+51                                   Hospital admission (procedure)
+52                                            Encounter for symptom
+53                       General examination of patient (procedure)
+54                               Encounter for check up (procedure)
+55 Administration of vaccine to produce active immunity (procedure)
+56 Administration of vaccine to produce active immunity (procedure)
+57                       General examination of patient (procedure)
+58                               Encounter for check up (procedure)
+59                                            Encounter for symptom
+60                             Emergency room admission (procedure)
+61                       General examination of patient (procedure)
+62                               Encounter for check up (procedure)
+63                       General examination of patient (procedure)
+64                               Encounter for check up (procedure)
+65                                           Encounter for check up
+66                       General examination of patient (procedure)
+67                                            Encounter for symptom
+   BASE_ENCOUNTER_COST TOTAL_CLAIM_COST PAYER_COVERAGE REASONCODE
+1                84.76           236.59           0.00  103697008
+2               179.08           921.18           0.00       &lt;NA&gt;
+3               179.08           921.18           0.00       &lt;NA&gt;
+4               179.08           921.18           0.00       &lt;NA&gt;
+5               179.08          1052.20           0.00       &lt;NA&gt;
+6               141.27         60568.68           0.00   72892002
+7               141.27         17847.49           0.00   72892002
+8               141.27          6496.43           0.00   72892002
+9               141.27         16484.56           0.00   72892002
+10              179.08          1188.20           0.00       &lt;NA&gt;
+11              141.27         17180.44           0.00   72892002
+12               84.76           272.12           0.00   66383009
+13              141.27         19545.29           0.00   72892002
+14              141.27          7708.63           0.00   72892002
+15              143.38          5598.28           0.00   72892002
+16              141.27          1353.47           0.00       &lt;NA&gt;
+17              141.27           141.27           0.00  389095005
+18              141.27         86786.05       48415.21   72892002
+19              141.27         20539.02       20539.02   72892002
+20              141.27         11660.32       11660.32   72892002
+21              141.27         16029.19       16029.19   72892002
+22              141.27         16029.19       16029.19   72892002
+23              141.27         14074.60        4788.36   72892002
+24              141.27          7211.71        7211.71   72892002
+25              141.27         11707.42       11707.42   72892002
+26              179.08          1381.60        1381.60       &lt;NA&gt;
+27               84.76          1644.85        1644.85  271737000
+28              141.27          9217.86        9217.86   72892002
+29               84.76           171.73         171.73   66383009
+30              143.38           749.48         749.48   72892002
+31              141.27          1353.47        1353.47       &lt;NA&gt;
+32               84.76            84.76          84.76  195662009
+33              141.27           747.37           0.00  183996000
+34              143.38         17752.15        7443.31  183996000
+35               84.76            84.76           0.00  195662009
+36               84.76            84.76           0.00  444814009
+37               84.76          1268.13           0.00       &lt;NA&gt;
+38              179.08          1190.42           0.00       &lt;NA&gt;
+39               84.76            90.30           0.00  103697008
+40              143.38           999.45           0.00       &lt;NA&gt;
+41               84.76            84.76           0.00  444814009
+42              179.08          1326.42           0.00       &lt;NA&gt;
+43               84.76           263.85           0.00  103697008
+44               84.76          1360.90           0.00       &lt;NA&gt;
+45               84.76            84.76           0.00  444814009
+46              179.08          1917.15           0.00       &lt;NA&gt;
+47               84.76           439.48           0.00   66383009
+48              179.08          1059.40           0.00       &lt;NA&gt;
+49               84.76          1775.56           0.00   66383009
+50               84.76          5064.58        1251.18  307426000
+51              143.38           782.83         469.70       &lt;NA&gt;
+52               84.76            84.76           0.00  444814009
+53              179.08          1321.44           0.00       &lt;NA&gt;
+54               84.76           910.20           0.00   66383009
+55              141.27           277.27           0.00       &lt;NA&gt;
+56              141.27           277.27           0.00       &lt;NA&gt;
+57              179.08          1676.58           0.00       &lt;NA&gt;
+58               84.76           531.01           0.00       &lt;NA&gt;
+59               84.76          3780.16          19.37   10509002
+60              143.38           143.38          86.03  384709000
+61              179.08          1059.40           0.00       &lt;NA&gt;
+62               84.76            89.69           0.00  103697008
+63              179.08          1486.27           0.00       &lt;NA&gt;
+64               84.76           351.21           0.00   66383009
+65               84.76          7183.88         653.93  275978004
+66              179.08          1498.45         899.07       &lt;NA&gt;
+67               84.76            84.76          50.86   43878008
+                                       REASONDESCRIPTION
+1           Patient referral for dental care (procedure)
+2                                                   &lt;NA&gt;
+3                                                   &lt;NA&gt;
+4                                                   &lt;NA&gt;
+5                                                   &lt;NA&gt;
+6                                       Normal pregnancy
+7                                       Normal pregnancy
+8                                       Normal pregnancy
+9                                       Normal pregnancy
+10                                                  &lt;NA&gt;
+11                                      Normal pregnancy
+12                                 Gingivitis (disorder)
+13                                      Normal pregnancy
+14                                      Normal pregnancy
+15                                      Normal pregnancy
+16                                                  &lt;NA&gt;
+17                   Contraception care (regime/therapy)
+18                                      Normal pregnancy
+19                                      Normal pregnancy
+20                                      Normal pregnancy
+21                                      Normal pregnancy
+22                                      Normal pregnancy
+23                                      Normal pregnancy
+24                                      Normal pregnancy
+25                                      Normal pregnancy
+26                                                  &lt;NA&gt;
+27                                     Anemia (disorder)
+28                                      Normal pregnancy
+29                                 Gingivitis (disorder)
+30                                      Normal pregnancy
+31                                                  &lt;NA&gt;
+32                    Acute viral pharyngitis (disorder)
+33                   Sterilization requested (situation)
+34                   Sterilization requested (situation)
+35                    Acute viral pharyngitis (disorder)
+36                            Viral sinusitis (disorder)
+37                                                  &lt;NA&gt;
+38                                                  &lt;NA&gt;
+39          Patient referral for dental care (procedure)
+40                                                  &lt;NA&gt;
+41                            Viral sinusitis (disorder)
+42                                                  &lt;NA&gt;
+43          Patient referral for dental care (procedure)
+44                                                  &lt;NA&gt;
+45                            Viral sinusitis (disorder)
+46                                                  &lt;NA&gt;
+47                                 Gingivitis (disorder)
+48                                                  &lt;NA&gt;
+49                                 Gingivitis (disorder)
+50                   Acute infective cystitis (disorder)
+51                                                  &lt;NA&gt;
+52                            Viral sinusitis (disorder)
+53                                                  &lt;NA&gt;
+54                                 Gingivitis (disorder)
+55                                                  &lt;NA&gt;
+56                                                  &lt;NA&gt;
+57                                                  &lt;NA&gt;
+58                                                  &lt;NA&gt;
+59                           Acute bronchitis (disorder)
+60                      Sprain (morphologic abnormality)
+61                                                  &lt;NA&gt;
+62          Patient referral for dental care (procedure)
+63                                                  &lt;NA&gt;
+64                                 Gingivitis (disorder)
+65 Screening for malignant neoplasm of colon (procedure)
+66                                                  &lt;NA&gt;
+67                  Streptococcal sore throat (disorder)</code></pre>
+</div>
+</div>
+<p>Inspecting these records, it doesn’t appear to be an issue with the source data but likely an issue with the ETL that needs investigation.</p>
+</section>
+<section id="isrequired-on-visit_occurrence.visit_end_date" class="level5">
+<h5 class="anchored" data-anchor-id="isrequired-on-visit_occurrence.visit_end_date"><code>isRequired</code> on <code>VISIT_OCCURRENCE.VISIT_END_DATE</code></h5>
+</section>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
