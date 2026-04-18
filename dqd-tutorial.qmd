@@ -24,6 +24,10 @@ This tutorial has the following structure:
 
 The following sections will provide an overview of how to work with this project and an overview of using the DataQualityDashboard.
 
+### Slides
+
+The PowerPoint slides that accompany this document is found in the root and is named `Mastering Data Quality Dashboard for OMOP CDM.pptx` and contains many details an visuals for the tutorial that are good to review before diving into this hands-on tutorial.
+
 ### Environment Setup
 
 Make sure you have restored all of the R packages necessary to run this tutorial. This is done by using the [renv](https://rstudio.github.io/renv/). If you do not have renv installed, you may install it by running:
